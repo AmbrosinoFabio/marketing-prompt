@@ -1,0 +1,10 @@
+# Personal backups exported from "My prompts": never commit them
+miei-prompt-*.json
+__pycache__/
+.DS_Store
+Thumbs.db
+
+# Drafts and the review page stay local until the author approves them
+bozze/
+revisione.html
+js/revisione.js

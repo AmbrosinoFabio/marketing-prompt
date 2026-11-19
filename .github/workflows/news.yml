@@ -1,0 +1,54 @@
+# Updates the home page news every day and warns when the official prompting
+# guides change. Can also be started by hand: Actions → "Update news" → Run workflow.
+name: Update news
+
+on:
+  schedule:
+    - cron: "0 6 * * *"   # every day at 06:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write   # commit data/news.js
+  issues: write     # open a reminder when a watched page changes
+
+concurrency:
+  group: news
+  cancel-in-progress: false
+
+jobs:
+  news:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Check the prompt library
+        run: python tools/valida_prompt.py
+
+      - name: Fetch news and check watched pages
+        id: news
+        run: python tools/aggiorna_news.py
+
+      - name: Commit if something changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/news.js data/news.json tools/stato_pagine.json
+          if git diff --cached --quiet; then
+            echo "Nothing to commit."
+          else
+            git commit -m "Update news ($(date -u +%Y-%m-%d))"
+            git push
+          fi
+
+      - name: Open a reminder issue when an official guide changed
+        if: steps.news.outputs.pagine_cambiate != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PAGINE: ${{ steps.news.outputs.pagine_cambiate }}
+        run: |
+          printf 'These official pages changed since the last check:\n\n%s\n\nReview the library prompts and the "Anatomy of a good prompt" section on the home page.\n' "$PAGINE" > corpo.md
+          gh issue create --title "Official prompting guide changed ($(date -u +%Y-%m-%d))" --body-file corpo.md

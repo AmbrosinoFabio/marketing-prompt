@@ -1,0 +1,12 @@
+{
+ "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices.md": {
+  "nome": "Claude prompting best practices",
+  "hash": "1b45ffbca510d5ce394b6bb4e92f87d68473aef57fadb573006b18cd2bb2f556",
+  "controllato": "2026-11-18"
+ },
+ "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview.md": {
+  "nome": "Claude prompt engineering overview",
+  "hash": "0dcdf2155778c9ace8ab0f2db4a9515c0a0df9b04ee32f82108cd93a6b42e318",
+  "controllato": "2026-11-18"
+ }
+}

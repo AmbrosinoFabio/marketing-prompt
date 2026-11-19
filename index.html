@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Marketing Prompt — prompts for digital marketing</title>
+  <meta name="title-en" content="Marketing Prompt — prompts for digital marketing">
+  <meta name="title-it" content="Marketing Prompt — prompt per il digital marketing">
+  <meta name="description" content="Free library of original digital marketing prompts for Claude and other AI assistants, with a private space to save your own.">
+  <link rel="canonical" href="https://ambrosinofabio.github.io/marketing-prompt/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Marketing Prompt">
+  <meta property="og:title" content="Marketing Prompt — prompts for digital marketing">
+  <meta property="og:description" content="Free library of original digital marketing prompts for Claude and other AI assistants, with a private space to save your own.">
+  <meta property="og:url" content="https://ambrosinofabio.github.io/marketing-prompt/">
+  <meta property="og:image" content="https://ambrosinofabio.github.io/marketing-prompt/img/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Marketing Prompt — prompts that get marketing work done">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%238B7CFF'/%3E%3Cstop offset='1' stop-color='%235AD1FF'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='8' fill='url(%23g)'/%3E%3Ctext x='16' y='22.5' font-family='Arial' font-weight='700' font-size='17' text-anchor='middle' fill='%230B0B0F'%3EM%3C/text%3E%3C/svg%3E">
+  <meta name="theme-color" content="#0B0B0F">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/i18n.js"></script>
+  <script src="js/comune.js"></script>
+</head>
+<body>
+  <a class="sr skip" href="#contenuto" data-i18n="ui.skip">Skip to content</a>
+  <header class="testa">
+    <div class="wrap">
+      <a class="logo" href="index.html"><span class="logo-mark" aria-hidden="true">M</span>Marketing Prompt</a>
+      <nav class="nav" id="nav">
+        <a href="index.html" data-i18n="nav.home" aria-current="page">Home</a>
+        <a href="prompt.html" data-i18n="nav.library">Prompt library</a>
+        <a href="miei-prompt.html" data-i18n="nav.mine">My prompts</a>
+        <a href="fonti.html" data-i18n="nav.sources">Sources &amp; licenses</a>
+      </nav>
+      <button class="btn-cerca" id="btnCerca" type="button" aria-label="Quick search (Ctrl K)" data-i18n-attr="aria-label:pal.title">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM20 20l-4-4"/></svg>
+        <span class="etich" data-i18n="ui.search">Search</span><span class="kbd">Ctrl K</span>
+      </button>
+      <button class="btn-icona" id="btnLingua" type="button">IT</button>
+      <button class="btn-icona" id="btnTema" type="button" aria-label="Switch theme"></button>
+      <button class="btn-icona burger" id="btnMenu" type="button" aria-expanded="false" aria-controls="nav" aria-label="Open menu" data-i18n-attr="aria-label:ui.menu"></button>
+    </div>
+  </header>
+  <main id="contenuto">
+    <section class="hero">
+      <div class="wrap hero-griglia">
+        <div>
+          <span class="occhiello" data-i18n="home.eyebrow">Free · open source · works offline</span>
+          <h1 data-i18n="home.title">Prompts that get marketing work done.</h1>
+          <p data-i18n="home.lead">An open library of prompts for Claude and other AI assistants, organized by marketing task. Fill in the fields, copy, paste — and keep your own prompts in your browser.</p>
+          <div class="azioni">
+            <a class="btn primario" href="prompt.html" data-i18n="home.ctaLib">Browse the library</a>
+            <a class="btn" href="miei-prompt.html" data-i18n="home.ctaMine">Save your prompts</a>
+          </div>
+          <div class="stat-riga">
+            <span><b id="statPrompt">24</b><span data-i18n="home.statPrompts">prompts</span></span>
+            <span><b id="statCat">12</b><span data-i18n="home.statCats">marketing tasks</span></span>
+            <span><b>0</b><span data-i18n="home.statData">data sent</span></span>
+          </div>
+        </div>
+        <div class="demo" id="demo">
+          <div class="demo-testa">
+            <span class="etichetta" data-i18n="home.demoLabel">Example</span>
+            <h2 id="demoTitolo">Welcome sequence (5 emails)</h2>
+            <button class="btn piccolo primario" id="demoApri" type="button" data-i18n="home.demoOpen">Open</button>
+          </div>
+          <div class="anteprima" id="demoTesto"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sezione">
+      <div class="wrap">
+        <div class="sez-testa">
+          <h2 data-i18n="home.cats">Browse by task</h2>
+          <a href="prompt.html" class="small" data-i18n="home.ctaLib">Browse the library</a>
+        </div>
+        <p class="intro" data-i18n="home.catsIntro">Each prompt has fields to fill in, a tip and the techniques it uses.</p>
+        <div class="griglia" id="griglia-cat"></div>
+      </div>
+    </section>
+
+    <section class="sezione">
+      <div class="wrap">
+        <h2 data-i18n="home.anatomy">Anatomy of a good prompt</h2>
+        <p class="intro" data-i18n="home.anatomyIntro">The official prompting guides agree on a few simple habits. Every prompt in the library follows them.</p>
+        <ol class="anatomia">
+          <li><strong data-i18n="an.role">Role</strong><span data-i18n="an.roleD">Tell the AI who it should be: "You are an SEO consultant…".</span></li>
+          <li><strong data-i18n="an.ctx">Context</strong><span data-i18n="an.ctxD">Give the facts: product, audience, data. Wrap long material in tags like &lt;data&gt;.</span></li>
+          <li><strong data-i18n="an.task">Task</strong><span data-i18n="an.taskD">Say exactly what to do, in numbered steps if there are several.</span></li>
+          <li><strong data-i18n="an.rules">Constraints</strong><span data-i18n="an.rulesD">Limits, things to avoid, and "don't invent facts".</span></li>
+          <li><strong data-i18n="an.format">Output format</strong><span data-i18n="an.formatD">Table, list, length: describe what the answer should look like.</span></li>
+          <li><strong data-i18n="an.ex">Examples</strong><span data-i18n="an.exD">One or two examples of what you like are worth a page of instructions.</span></li>
+        </ol>
+        <a class="link-freccia" href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices" rel="noopener" data-i18n="home.anatomyLink">Read Anthropic's prompting best practices →</a>
+      </div>
+    </section>
+
+    <section class="sezione">
+      <div class="wrap">
+        <h2 data-i18n="home.news">Latest from the sources</h2>
+        <p class="intro" data-i18n="home.newsIntro">Updated automatically every day from official AI sources and marketing blogs. Each item links to the original article.</p>
+        <div class="filtri-news" id="filtri-news"></div>
+        <p class="conteggio" id="novita-agg"></p>
+        <ul class="novita" id="novita"></ul>
+        <p class="fonte-riga" data-i18n="home.newsAuto">Automatic news: title and short excerpt from the source.</p>
+      </div>
+    </section>
+
+    <section class="sezione">
+      <div class="wrap">
+        <div class="scheda">
+          <h2 data-i18n="home.offline">Use it offline</h2>
+          <p data-i18n="home.offlineText">Download the project from GitHub and open index.html with a double click: it works without installing anything. Your prompts are saved in the browser you use.</p>
+          <div class="piede-scheda"><a class="btn" href="https://github.com/AmbrosinoFabio/marketing-prompt#readme" data-i18n="home.offlineLink">How to download it</a></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="piede">
+    <div class="wrap">
+      <div>
+        <h2 data-i18n="foot.about">About</h2>
+        <p data-i18n="foot.aboutText">An open-source, non-profit personal project by Fabio Ambrosino.</p>
+        <p data-i18n="foot.errors">May contain errors: always check what the AI produces before using it.</p>
+        <p><a href="https://github.com/AmbrosinoFabio/marketing-prompt/issues" data-i18n="foot.report">Report an error</a></p>
+      </div>
+      <div>
+        <h2 data-i18n="foot.privacy">Privacy</h2>
+        <p data-i18n="foot.privacyText">Your prompts stay in your browser: nothing is sent to any server. No cookies, no analytics.</p>
+      </div>
+      <div>
+        <h2 data-i18n="foot.ai">AI and licenses</h2>
+        <p data-i18n="foot.aiText">Prompts and texts were written with AI assistance (Claude) under the editorial responsibility of the author.</p>
+        <p><a href="fonti.html#licenze" data-i18n="foot.lic">Code: MIT · Content: CC BY-NC 4.0 · Details</a></p>
+        <p class="small" data-i18n="foot.tm">Not affiliated with Anthropic, OpenAI or Google. Product names are trademarks of their owners.</p>
+        <p class="small">© <span id="anno">2026</span> Fabio Ambrosino</p>
+      </div>
+    </div>
+  </footer>
+  <script src="data/categorie.js"></script>
+  <script src="data/prompts.js"></script>
+  <script src="data/prompts-it.js"></script>
+  <script src="data/news.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/palette.js"></script>
+  <script src="js/home.js"></script>
+</body>
+</html>
