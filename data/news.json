@@ -1,6 +1,54 @@
 {
- "aggiornato": "2026-11-18T15:20:00Z",
+ "aggiornato": "2026-11-19T15:50:46Z",
  "voci": [
+  {
+   "titolo": "Claude Cowork skills: How they work and what to build",
+   "url": "https://blog.hubspot.com/marketing/claude-cowork-skills",
+   "fonte": "HubSpot Marketing Blog",
+   "tipo": "marketing",
+   "data": "2026-11-19T13:30:03Z",
+   "estratto": "If you’ve yet to understand Claude Cowork skills, let me help you out: Claude Cowork is a mode that can access your desktop files and complete tasks for you. A skill is a set of instructions that tell Claude exactly how to perform a specific workflow. When combined, the two can…"
+  },
+  {
+   "titolo": "How to Create Authentic Short-Form Videos People Actually Watch",
+   "url": "https://www.socialmediaexaminer.com/how-to-create-authentic-short-form-videos-people-actually-watch/",
+   "fonte": "Social Media Examiner",
+   "tipo": "marketing",
+   "data": "2026-11-19T11:00:00Z",
+   "estratto": "Struggling to create short-form videos that people actually watch instead of scrolling past? Wondering how to script, film, and edit Instagram Reels and TikTok videos on your phone that feel authentic and grow your audience? ​In this article, you’ll discover a simple framework…"
+  },
+  {
+   "titolo": "Make GIFs in ChatGPT, Edit Videos With AI, and Industry News",
+   "url": "https://www.socialmediaexaminer.com/make-gifs-in-chatgpt-edit-videos-with-ai-and-industry-news/",
+   "fonte": "Social Media Examiner",
+   "tipo": "marketing",
+   "data": "2026-11-19T10:30:00Z",
+   "estratto": "New at AI Business World: Callan Faulkner, Kinsey Soderberg, and Dr. Nici Sweaney join the AI lineup. Meet the AI speakers → Friday is almost here! Before you unplug, here’s one last round of insights and updates. Whether you read them now or save them for later, you won’t want…"
+  },
+  {
+   "titolo": "Introducing Gemini 4 Neon",
+   "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-neon/",
+   "fonte": "Google Gemini",
+   "tipo": "ai",
+   "data": "2026-11-18T21:00:00Z",
+   "estratto": "Today, we’re introducing Gemini 4 Neon"
+  },
+  {
+   "titolo": "Genie 4 is now available",
+   "url": "https://blog.google/innovation-and-ai/models-and-research/google-deepmind/genie-4-now-available-project-genie/",
+   "fonte": "Google Gemini",
+   "tipo": "ai",
+   "data": "2026-11-18T18:00:00Z",
+   "estratto": "We are rolling out a new Project Genie experience to eligible Google AI Ultra subscribers, opening access to our new Genie 4 world model."
+  },
+  {
+   "titolo": "The Gemini app is now available on lower-memory Android devices.",
+   "url": "https://blog.google/innovation-and-ai/products/gemini-app/gemini-lower-memory-devices/",
+   "fonte": "Google Gemini",
+   "tipo": "ai",
+   "data": "2026-11-18T17:00:00Z",
+   "estratto": "The Google Gemini app now supports lower-memory Android devices. Access Gemini Live and custom image creation on your phone. Download the app today."
+  },
   {
    "titolo": "Barnacle SEO: Spam Risk or Smart Marketing?",
    "url": "https://ahrefs.com/blog/barnacle-seo/",
@@ -16,6 +64,46 @@
    "tipo": "marketing",
    "data": "2026-11-18T10:11:58Z",
    "estratto": "I won’t insult you by pretending this is an unbiased review. Let’s own it: I work at Ahrefs! Tim is my boss! I helped edit the book! But I will share my honest take on what you, dear reader, stand …"
+  },
+  {
+   "titolo": "The Silent Consensus",
+   "url": "https://openai.com/index/the-silent-consensus",
+   "fonte": "OpenAI News",
+   "tipo": "ai",
+   "data": "2026-11-18T10:00:00Z",
+   "estratto": "Dean Ball, Head of Strategic Futures at OpenAI, examines how more capable AI could reshape society and how people can retain control of their institutions."
+  },
+  {
+   "titolo": "Research acceleration: The jagged frontier",
+   "url": "https://openai.com/index/research-acceleration-jagged-frontier",
+   "fonte": "OpenAI News",
+   "tipo": "ai",
+   "data": "2026-11-18T08:00:00Z",
+   "estratto": "OpenAI measures how coding agents are accelerating AI research, where their performance remains uneven, and what this signals about recursive self-improvement."
+  },
+  {
+   "titolo": "How Sumitomo Life’s leaders helped teams adopt ChatGPT Enterprise",
+   "url": "https://openai.com/business/customer-stories/sumitomo-life",
+   "fonte": "OpenAI News",
+   "tipo": "ai",
+   "data": "2026-11-18T08:00:00Z",
+   "estratto": "Sumitomo Life uses ChatGPT Enterprise to research insurers, prepare proposals, and draft code for investment analysis. Early use by executives helped drive adoption."
+  },
+  {
+   "titolo": "Inside the Codex sandbox",
+   "url": "https://openai.com/index/inside-the-codex-sandbox",
+   "fonte": "OpenAI News",
+   "tipo": "ai",
+   "data": "2026-11-18T08:00:00Z",
+   "estratto": "See how Codex runs commands on your machine while enforcing the filesystem and network limits you control across macOS, Linux, and Windows."
+  },
+  {
+   "titolo": "Managing frontier AI risk: From training to deployment",
+   "url": "https://openai.com/index/managing-frontier-ai-risk",
+   "fonte": "OpenAI News",
+   "tipo": "ai",
+   "data": "2026-11-18T06:00:00Z",
+   "estratto": "OpenAI explains how it manages frontier AI risk from training through deployment with model alignment, sandboxing, blocking safeguards, and monitoring."
   },
   {
    "titolo": "Le Groupe Figaro and OpenAI partner to bring Le Figaro journalism to ChatGPT",
@@ -188,7 +276,7 @@
   {
    "titolo": "Google Search gets a major upgrade with Gemini 4 Hydrogen",
    "url": "https://blog.google/products-and-platforms/products/search/gemini-4-hydrogen-search-upgrade/",
-   "fonte": "Google Gemini",
+   "fonte": "Google AI Blog",
    "tipo": "ai",
    "data": "2026-11-12T18:00:00Z",
    "estratto": "We are bringing Gemini 4 Hydrogen to Google Search globally to provide you with more helpful, visual, and intuitive responses."
