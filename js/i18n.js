@@ -48,7 +48,8 @@
       "home.newsAll": "All", "home.newsAi": "AI & prompting", "home.newsMkt": "Marketing",
       "home.newsAuto": "Automatic news: title and short excerpt from the source.",
       "home.offline": "Use it offline",
-      "home.offlineText": "Download the project from GitHub and open index.html with a double click: it works without installing anything. Your prompts are saved in the browser you use.",
+      "home.offlineText": "Install it as an app from Chrome or Edge (button below, or the install icon in the address bar): it then opens in its own window and works without internet. Or download the project from GitHub and open index.html with a double click. Your prompts are saved in the browser you use.",
+      "pwa.install": "Install the app", "pwa.installed": "App installed: you can now open it from your apps, even offline.",
       "home.offlineLink": "How to download it",
 
       "lib.title": "Prompt library",
@@ -144,7 +145,8 @@
       "home.newsAll": "Tutte", "home.newsAi": "AI e prompting", "home.newsMkt": "Marketing",
       "home.newsAuto": "Notizia automatica: titolo e breve estratto dalla fonte.",
       "home.offline": "Usala offline",
-      "home.offlineText": "Scarica il progetto da GitHub e apri index.html con un doppio clic: funziona senza installare nulla. I tuoi prompt vengono salvati nel browser che usi.",
+      "home.offlineText": "Installala come app da Chrome o Edge (pulsante qui sotto, o l'icona di installazione nella barra degli indirizzi): si apre in una finestra sua e funziona anche senza internet. Oppure scarica il progetto da GitHub e apri index.html con un doppio clic. I tuoi prompt vengono salvati nel browser che usi.",
+      "pwa.install": "Installa l'app", "pwa.installed": "App installata: ora puoi aprirla dalle tue app, anche offline.",
       "home.offlineLink": "Come scaricarla",
 
       "lib.title": "Libreria di prompt",
