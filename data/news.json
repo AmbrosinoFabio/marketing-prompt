@@ -1,6 +1,46 @@
 {
- "aggiornato": "2026-11-19T15:50:46Z",
+ "aggiornato": "2026-11-20T14:48:40Z",
  "voci": [
+  {
+   "titolo": "AI search volatility: What it means for your traffic",
+   "url": "https://blog.hubspot.com/marketing/ai-search-volatility",
+   "fonte": "HubSpot Marketing Blog",
+   "tipo": "marketing",
+   "data": "2026-11-20T13:30:06Z",
+   "estratto": "For SEO managers, volatility is nothing new (Google has been hitting us with algorithm update surprises for years). But AI search volatility adds a new layer of complexity. Plenty of teams have a stake in those swings: In HubSpot’s State of AEO report , 58% of marketers said…"
+  },
+  {
+   "titolo": "ICYMI: Transfer your history from other AI apps into Gemini.",
+   "url": "https://blog.google/innovation-and-ai/products/gemini-app/switch-ai-assistants-transfer-history/",
+   "fonte": "Google Gemini",
+   "tipo": "ai",
+   "data": "2026-11-19T20:30:00Z",
+   "estratto": "Transfer your chat history into Gemini. Import your ZIP files and AI summaries to continue conversations seamlessly. Get the details."
+  },
+  {
+   "titolo": "Introducing Tool Retrieval in the Gemini API",
+   "url": "https://blog.google/innovation-and-ai/technology/developers-tools/gemini-api-tool-retrieval/",
+   "fonte": "Google AI Blog",
+   "tipo": "ai",
+   "data": "2026-11-19T18:00:00Z",
+   "estratto": "Give your agents access to hundreds of tools while using fewer tokens with Tool Retrieval, now in preview in the Gemini API."
+  },
+  {
+   "titolo": "Walter Isaacson on curiosity and creativity in the AI age.",
+   "url": "https://blog.google/innovation-and-ai/technology/ai/dialogues-walter-isaacson/",
+   "fonte": "Google AI Blog",
+   "tipo": "ai",
+   "data": "2026-11-19T17:00:00Z",
+   "estratto": "Walter Isaacson joins Google to discuss how history’s greatest innovators inspire creativity and human judgment in the AI age. Watch the episode."
+  },
+  {
+   "titolo": "Let Gemini tackle repetitive chores on your Mac",
+   "url": "https://blog.google/innovation-and-ai/products/gemini-app/computer-use-mac/",
+   "fonte": "Google Gemini",
+   "tipo": "ai",
+   "data": "2026-11-19T17:00:00Z",
+   "estratto": "The Gemini app for Mac now has computer use to help you with repetitive tasks."
+  },
   {
    "titolo": "Claude Cowork skills: How they work and what to build",
    "url": "https://blog.hubspot.com/marketing/claude-cowork-skills",
@@ -24,6 +64,46 @@
    "tipo": "marketing",
    "data": "2026-11-19T10:30:00Z",
    "estratto": "New at AI Business World: Callan Faulkner, Kinsey Soderberg, and Dr. Nici Sweaney join the AI lineup. Meet the AI speakers → Friday is almost here! Before you unplug, here’s one last round of insights and updates. Whether you read them now or save them for later, you won’t want…"
+  },
+  {
+   "titolo": "How OpenAI’s Performance Factory keeps ChatGPT fast",
+   "url": "https://openai.com/index/how-openai-performance-factory-keeps-chatgpt-fast",
+   "fonte": "OpenAI News",
+   "tipo": "ai",
+   "data": "2026-11-19T08:00:00Z",
+   "estratto": "Learn how OpenAI built the Performance Factory, a system of Codex-powered workflows that finds and fixes performance issues to help keep ChatGPT fast."
+  },
+  {
+   "titolo": "Deploying Daybreak Red",
+   "url": "https://openai.com/business/learn/deploying-daybreak-red",
+   "fonte": "OpenAI News",
+   "tipo": "ai",
+   "data": "2026-11-19T00:00:00Z",
+   "estratto": "Explore a reference architecture for supervised security investigations with Daybreak Red, including safety controls, setup, and monitoring."
+  },
+  {
+   "titolo": "See PR scans in action",
+   "url": "https://openai.com/business/learn/pr-scans-demo",
+   "fonte": "OpenAI News",
+   "tipo": "ai",
+   "data": "2026-11-19T00:00:00Z",
+   "estratto": "Watch a walkthrough of PR scans and see how the presenter reviews scan results in a pull request workflow."
+  },
+  {
+   "titolo": "Explore the Codex Security Plugin",
+   "url": "https://openai.com/business/learn/codex-security-plugin-demo",
+   "fonte": "OpenAI News",
+   "tipo": "ai",
+   "data": "2026-11-19T00:00:00Z",
+   "estratto": "Watch a demo of the Codex Security Plugin and see the workflow in action, from getting started to reviewing the results shown in the recording."
+  },
+  {
+   "titolo": "Get started with Daybreak Blue",
+   "url": "https://openai.com/business/learn/daybreak-blue-onboarding-demo",
+   "fonte": "OpenAI News",
+   "tipo": "ai",
+   "data": "2026-11-19T00:00:00Z",
+   "estratto": "Watch a walkthrough of onboarding to Daybreak Blue, with a closer look at the setup experience and how to get started."
   },
   {
    "titolo": "Introducing Gemini 4 Neon",
@@ -132,7 +212,7 @@
   {
    "titolo": "Put Gemini to work for you",
    "url": "https://blog.google/innovation-and-ai/products/gemini-app/tasks-in-gemini-free-new-features/",
-   "fonte": "Google Gemini",
+   "fonte": "Google AI Blog",
    "tipo": "ai",
    "data": "2026-11-17T17:00:00Z",
    "estratto": "Tasks in Gemini is now free of charge in six countries, with new features starting in the U.S. and deeper Google Workspace integration to get things done on your behalf."
@@ -400,62 +480,6 @@
    "tipo": "marketing",
    "data": "2026-11-03T08:00:00Z",
    "estratto": "Is your content strategy ready for the newest evolution of search? Learn an easy 5-step workflow to track AI visibility and optimize your content using Moz Pro’s AI Research toolkit."
-  },
-  {
-   "titolo": "Bring cookbooks up to Haiku 5.5 and the 2.0 SDK (#944)",
-   "url": "https://github.com/anthropics/claude-cookbooks/commit/785d7a06457b3413727f386b9c470083feb23c49",
-   "fonte": "Claude cookbooks (GitHub)",
-   "tipo": "ai",
-   "data": "2026-11-02T21:46:45Z",
-   "estratto": ""
-  },
-  {
-   "titolo": "Merge pull request #45 from emmanuel-ferdman/master",
-   "url": "https://github.com/anthropics/courses/commit/f4dbb137d7b02dddaf3cc73e32e20a702d3b5e77",
-   "fonte": "Anthropic courses (GitHub)",
-   "tipo": "ai",
-   "data": "2025-11-13T20:40:50Z",
-   "estratto": ""
-  },
-  {
-   "titolo": "Merge pull request #97 from jennarbates/patch-1",
-   "url": "https://github.com/anthropics/courses/commit/8523fca1beeae9c1db390393f1a48e8767e967ec",
-   "fonte": "Anthropic courses (GitHub)",
-   "tipo": "ai",
-   "data": "2025-10-09T18:04:20Z",
-   "estratto": ""
-  },
-  {
-   "titolo": "Accelerating development for massive Git repositories",
-   "url": "https://developers.googleblog.com/accelerating-development-for-massive-git-repositories/",
-   "fonte": "Google for Developers",
-   "tipo": "ai",
-   "data": "",
-   "estratto": "Meet Another Build File Service (ABFS), Google's open-source content-addressable filesystem and build cache that cuts Android checkouts to < 8s and builds to ~2m."
-  },
-  {
-   "titolo": "Gemini 4 Hydrogen: a faster model for general purpose robotics",
-   "url": "https://developers.googleblog.com/gemini-hydrogen-for-robotics/",
-   "fonte": "Google for Developers",
-   "tipo": "ai",
-   "data": "",
-   "estratto": "Google's Gemini 4 Hydrogen brings strong spatial and embodied reasoning capabilities to a fast, efficient model built specifically for robotics. To help developers put these capabilities to work, the new Robotics plugin for Google Antigravity transforms the platform into a…"
-  },
-  {
-   "titolo": "Build full-stack Android apps with Gemini in Google AI Studio",
-   "url": "https://developers.googleblog.com/build-full-stack-android-apps-with-gemini-in-google-ai-studio/",
-   "fonte": "Google for Developers",
-   "tipo": "ai",
-   "data": "",
-   "estratto": "Google AI Studio now lets developers build, test, and ship full-stack Kotlin Android apps from a single prompt—complete with Cloud Firestore, Firebase Authentication, Firebase AI Logic, a faster HD emulator with audio, visual screenshot debugging, and direct publishing to your…"
-  },
-  {
-   "titolo": "Agents are sessions, not requests: size GKE node pools for AI agent sessions",
-   "url": "https://developers.googleblog.com/agents-are-sessions-not-requests-size-gke-node-pools-for-ai-agent-sessions/",
-   "fonte": "Google for Developers",
-   "tipo": "ai",
-   "data": "",
-   "estratto": "AI agent sessions remain active and idle for most of the workday, making traditional one-Pod-per-session allocations inefficient for cluster resources. By using open-source tools like Agent Substrate and AX on GKE, developers can park idle sessions in object storage to release…"
   }
  ]
 }
