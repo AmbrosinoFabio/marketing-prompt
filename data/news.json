@@ -1,6 +1,22 @@
 {
- "aggiornato": "2026-11-21T14:05:11Z",
+ "aggiornato": "2026-11-23T17:13:11Z",
  "voci": [
+  {
+   "titolo": "A more tailored Google Search that’s uniquely yours",
+   "url": "https://blog.google/products-and-platforms/products/search/google-search-personal-intelligence-apps/",
+   "fonte": "Google Gemini",
+   "tipo": "ai",
+   "data": "2026-11-23T17:00:00Z",
+   "estratto": "Get more helpful Search responses by securely opting in to connect Google Wallet, Drive, and the Gemini app to Personal Intelligence in AI Mode."
+  },
+  {
+   "titolo": "Perplexity and Intelligence",
+   "url": "https://openai.com/index/perplexity-and-intelligence",
+   "fonte": "OpenAI News",
+   "tipo": "ai",
+   "data": "2026-11-22T00:00:00Z",
+   "estratto": "How perplexity measures progress in AI models, and why it could help developers establish a shared approach to evaluating emerging capabilities."
+  },
   {
    "titolo": "ci: use claude-code-action v1 (#979)",
    "url": "https://github.com/anthropics/claude-cookbooks/commit/8ad5de647d4f0f50c95d74aabc8aa20a3f70cdd3",
@@ -464,22 +480,6 @@
    "tipo": "marketing",
    "data": "2026-11-10T14:30:05Z",
    "estratto": "AEO benchmarking measures your brand’s AI search visibility against competitors and market trends. It tells you whether a change in your visibility comes from the market or from your own brand, so you can prove performance to leadership before you change tactics."
-  },
-  {
-   "titolo": "How to use AI to write a blog post (that isn’t slop)",
-   "url": "https://blog.hubspot.com/marketing/how-to-use-ai-to-write-a-blog-post",
-   "fonte": "HubSpot Marketing Blog",
-   "tipo": "marketing",
-   "data": "2026-11-10T14:20:05Z",
-   "estratto": "As a seasoned marketer and lifelong writer, even I will admit AI can be a helpful tool in creating content. HubSpot’s 2026 State of Marketing backs me up, finding that 42.5% of marketing teams use AI extensively as a content creation tool, and another 38% use it occasionally —…"
-  },
-  {
-   "titolo": "How to Edit Videos With AI (No Editing Skills Required)",
-   "url": "https://www.socialmediaexaminer.com/how-to-edit-videos-with-ai-no-editing-skills-required/",
-   "fonte": "Social Media Examiner",
-   "tipo": "marketing",
-   "data": "2026-11-10T11:00:00Z",
-   "estratto": "Is video editing the bottleneck keeping you from publishing more videos on YouTube and social media? Wondering how to use Claude Code or ChatGPT Codex to edit your videos, add motion graphics, and pick music without learning editing software? In this article, you’ll discover how…"
   }
  ]
 }
