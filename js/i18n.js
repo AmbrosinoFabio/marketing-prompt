@@ -50,6 +50,7 @@
       "home.offline": "Use it offline",
       "home.offlineText": "Install it as an app from Chrome or Edge (button below, or the install icon in the address bar): it then opens in its own window and works without internet. Or download the project from GitHub and open index.html with a double click. Your prompts are saved in the browser you use.",
       "pwa.install": "Install the app", "pwa.installed": "App installed: you can now open it from your apps, even offline.",
+      "pwa.update": "A new version of the site is available.", "pwa.reload": "Reload", "pwa.later": "Later",
       "home.offlineLink": "How to download it",
 
       "lib.title": "Prompt library",
@@ -150,6 +151,7 @@
       "home.offline": "Usala offline",
       "home.offlineText": "Installala come app da Chrome o Edge (pulsante qui sotto, o l'icona di installazione nella barra degli indirizzi): si apre in una finestra sua e funziona anche senza internet. Oppure scarica il progetto da GitHub e apri index.html con un doppio clic. I tuoi prompt vengono salvati nel browser che usi.",
       "pwa.install": "Installa l'app", "pwa.installed": "App installata: ora puoi aprirla dalle tue app, anche offline.",
+      "pwa.update": "È disponibile una nuova versione del sito.", "pwa.reload": "Aggiorna", "pwa.later": "Più tardi",
       "home.offlineLink": "Come scaricarla",
 
       "lib.title": "Libreria di prompt",
