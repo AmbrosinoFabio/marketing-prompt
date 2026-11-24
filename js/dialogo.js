@@ -5,6 +5,9 @@
   "use strict";
   var MP = window.MP = window.MP || {};
   var el = function (t, c, x) { return MP.el(t, c, x); };
+  // Longer links are opened without the prompt (it is in the clipboard anyway):
+  // very long URLs can be rejected by servers and browsers.
+  var MAX_URL_CLAUDE = 8000;
 
   /**
    * opzioni.prompt       { titolo, categoria, descrizione, testo, variabili?, consiglio?, tecniche?, fonte?, licenza?, revisione?, note? }
@@ -131,6 +134,19 @@
     var copia = function () { MP.copia(MP.compila(p.testo, valori), bCopia); };
     bCopia.addEventListener("click", copia);
     piede.appendChild(bCopia);
+    // Open in Claude: claude.ai/new?q= prefills the chat box (it is never sent automatically).
+    // The prompt is also copied, so the user can paste it if the box stays empty
+    // (Claude may ask to confirm a prompt that comes from a link, or ignore it if very long).
+    var bClaude = MP.bottone("btn", "esterno", MP.t("lib.openClaude"));
+    bClaude.title = MP.t("lib.openClaudeTip");
+    bClaude.addEventListener("click", function () {
+      var testo = MP.compila(p.testo, valori);
+      MP.copia(testo, null, MP.t("lib.openClaudeCopied"));
+      var url = "https://claude.ai/new?q=" + encodeURIComponent(testo);
+      if (url.length > MAX_URL_CLAUDE) url = "https://claude.ai/new";
+      window.open(url, "_blank", "noopener,noreferrer");
+    });
+    piede.appendChild(bClaude);
     (opzioni.azioniExtra || []).forEach(function (a) {
       var b = MP.bottone("btn" + (a.primario ? " primario" : ""), a.icona, a.etichetta);
       b.addEventListener("click", function () { a.azione(MP.compila(p.testo, valori), dlg); });

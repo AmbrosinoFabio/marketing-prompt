@@ -1,0 +1,38 @@
+# Checks the prompt library on every push and pull request that touches it.
+# If a prompt is broken (missing variable, duplicate id, missing translation of an id…)
+# the run fails and GitHub shows a red ✗ next to the commit.
+# Can also be started by hand: Actions → "Check prompts" → Run workflow.
+name: Check prompts
+
+on:
+  push:
+    paths:
+      - "data/prompts.js"
+      - "data/prompts-it.js"
+      - "data/categorie.js"
+      - "tools/valida_prompt.py"
+      - ".github/workflows/valida.yml"
+  pull_request:
+    paths:
+      - "data/prompts.js"
+      - "data/prompts-it.js"
+      - "data/categorie.js"
+      - "tools/valida_prompt.py"
+      - ".github/workflows/valida.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  valida:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Check the prompt library
+        run: python tools/valida_prompt.py

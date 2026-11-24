@@ -5,6 +5,8 @@ English by default, also available in Italian (button **IT** in the header). Dar
 
 **Shortcuts:** `Ctrl K` (or `/`) quick search from any page · `C` copy the open prompt · `Esc` close.
 
+**Open in Claude:** the button in every prompt opens claude.ai in a new tab with the filled-in prompt in the chat box (nothing is sent until you press Enter). The prompt is also copied, so you can paste it if the box stays empty.
+
 🔗 **Live site:** https://ambrosinofabio.github.io/marketing-prompt/
 
 ## What's inside
@@ -72,6 +74,7 @@ tools/fonti.py           news sources and watched pages
 tools/aggiorna_news.py   updates data/news.js (standard library only)
 tools/valida_prompt.py   checks the prompt library
 .github/workflows/news.yml   runs the update every day at 06:00 UTC
+.github/workflows/valida.yml checks the prompts on every push / pull request that changes them
 ```
 
 **Adding a prompt:** add it to `data/prompts.js` and its translation to `data/prompts-it.js`

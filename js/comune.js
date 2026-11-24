@@ -84,7 +84,8 @@
     freccia: "M5 12h14M13 6l6 6-6 6",
     piu: "M12 5v14M5 12h14",
     file: "M7 3h7l5 5v13H7zM14 3v5h5",
-    nota: "M5 4h14v16H5zM9 8h6M9 12h6M9 16h4"
+    nota: "M5 4h14v16H5zM9 8h6M9 12h6M9 16h4",
+    esterno: "M14 4h6v6M20 4l-9 9M18 14v6H4V6h6"
   };
   MP.icona = function (nome) {
     var ns = "http://www.w3.org/2000/svg";
@@ -113,10 +114,11 @@
   };
 
   /** Copies to the clipboard. On file:// navigator.clipboard may be missing, so there is a fallback.
-      If a button is passed, it shows "Copied ✓" on it for 2 seconds. */
-  MP.copia = function (testo, bottone) {
+      If a button is passed, it shows "Copied ✓" on it for 2 seconds.
+      msgOk (optional) replaces the usual "Copied" toast. */
+  MP.copia = function (testo, bottone, msgOk) {
     function esito(ok) {
-      MP.toast(MP.t(ok ? "ui.copied" : "ui.copyFail"));
+      MP.toast(ok ? (msgOk || MP.t("ui.copied")) : MP.t("ui.copyFail"));
       if (ok && bottone && !bottone._copiato) {
         var prima = Array.prototype.slice.call(bottone.childNodes);
         bottone._copiato = true;
