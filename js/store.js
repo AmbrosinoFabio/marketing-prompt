@@ -39,16 +39,29 @@
   function pulisci(p) {
     var s = function (v, max) { return String(v == null ? "" : v).slice(0, max); };
     var ora = new Date().toISOString();
+    // dates are compared as text when merging a backup: accept only real dates,
+    // rewritten in the same ISO format (a value like "zzzz" would always "win")
+    var data = function (v) {
+      var ms = Date.parse(s(v, 40));
+      return isNaN(ms) ? ora : new Date(ms).toISOString();
+    };
+    // field labels and examples (prompts saved from the library)
+    var variabili = (Array.isArray(p.variabili) ? p.variabili : []).slice(0, 50).filter(function (v) {
+      return v && typeof v === "object" && /^[a-z][a-z0-9_]*$/.test(String(v.nome));
+    }).map(function (v) {
+      return { nome: s(v.nome, 40), etichetta: s(v.etichetta, 200), esempio: s(v.esempio, 500) };
+    });
     return {
       id: s(p.id, 80) || nuovoId(),
-      titolo: s(p.titolo, 200) || "Senza titolo",
+      titolo: s(p.titolo, 200) || (MP.t ? MP.t("mine.untitled") : "Untitled"),
       categoria: s(p.categoria, 40) || "altro",
       testo: s(p.testo, 50000),
       note: s(p.note, 5000),
+      variabili: variabili,
       preferito: !!p.preferito,
       origine: s(p.origine, 80),
-      creato: s(p.creato, 40) || ora,
-      modificato: s(p.modificato, 40) || ora
+      creato: data(p.creato),
+      modificato: data(p.modificato)
     };
   }
 
@@ -105,7 +118,8 @@
         if (i < 0) { lista.push(p); nuovi++; }
         else if (p.modificato > lista[i].modificato) { lista[i] = p; aggiornati++; }
       });
-      scriviTutti(lista);
+      // e.g. browser storage full: say so instead of reporting a success
+      if ((nuovi || aggiornati) && !scriviTutti(lista)) throw new Error(MP.t("ui.saveFail"));
       return { nuovi: nuovi, aggiornati: aggiornati };
     }
   };

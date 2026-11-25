@@ -11,7 +11,7 @@
 
   /**
    * opzioni.prompt       { titolo, categoria, descrizione, testo, variabili?, consiglio?, tecniche?, fonte?, licenza?, revisione?, note? }
-   * opzioni.azioniExtra  [{ etichetta, icona?, primario?, azione(testoCompilato, dialog) }]
+   * opzioni.azioniExtra  [{ etichetta, icona?, primario?, azione(testoCompilato, dialog, bottone), prepara?(bottone) }]
    */
   MP.apriPrompt = function (opzioni) {
     var p = opzioni.prompt;
@@ -149,7 +149,8 @@
     piede.appendChild(bClaude);
     (opzioni.azioniExtra || []).forEach(function (a) {
       var b = MP.bottone("btn" + (a.primario ? " primario" : ""), a.icona, a.etichetta);
-      b.addEventListener("click", function () { a.azione(MP.compila(p.testo, valori), dlg); });
+      b.addEventListener("click", function () { a.azione(MP.compila(p.testo, valori), dlg, b); });
+      if (a.prepara) a.prepara(b); // lets the action set its initial state (e.g. "Saved")
       piede.appendChild(b);
     });
     if (nomi.length) {

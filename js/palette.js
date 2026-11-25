@@ -165,7 +165,14 @@
     if (!dlg) crea();
     if (dlg.open) { dlg.close(); return; }
     var altro = document.querySelector("dialog[open]");
-    if (altro) altro.close();
+    if (altro) {
+      // closing a window with something typed in it would lose that text (e.g. the editor)
+      var compilato = Array.prototype.some.call(altro.querySelectorAll("input, textarea"), function (x) {
+        return x.type !== "file" && x.value.trim() !== "";
+      });
+      if (compilato) { MP.toast(MP.t("pal.busy")); return; }
+      altro.close();
+    }
     input.value = "";
     sel = 0;
     disegna();

@@ -106,11 +106,26 @@
 
   MP.toast = function (msg) {
     var t = document.getElementById("toast");
-    if (!t) { t = MP.el("div", "toast"); t.id = "toast"; t.setAttribute("role", "status"); document.body.appendChild(t); }
+    if (!t) { t = MP.el("div", "toast"); t.id = "toast"; t.setAttribute("role", "status"); }
+    // An open modal dialog covers everything else on the page (and makes it inert for
+    // screen readers), so the message goes inside the dialog while one is open…
+    var dialogo = document.querySelector("dialog[open]");
+    var dove = dialogo || document.body;
+    if (t.parentNode !== dove) dove.appendChild(t);
+    // …and back to the page when that dialog closes (e.g. "Saved" right before closing)
+    if (dialogo && !dialogo._toastAscolto) {
+      dialogo._toastAscolto = true;
+      dialogo.addEventListener("close", function () {
+        var x = document.getElementById("toast") || t;
+        if (dialogo.contains(x)) document.body.appendChild(x);
+      });
+    }
     t.textContent = msg;
     t.classList.add("vis");
     clearTimeout(MP._toastTimer);
-    MP._toastTimer = setTimeout(function () { t.classList.remove("vis"); }, 2200);
+    // longer messages stay longer, so they can be read (2.2 s minimum, 6 s maximum)
+    var durata = Math.min(6000, Math.max(2200, String(msg).length * 60));
+    MP._toastTimer = setTimeout(function () { t.classList.remove("vis"); }, durata);
   };
 
   /** Copies to the clipboard. On file:// navigator.clipboard may be missing, so there is a fallback.

@@ -64,7 +64,9 @@
       "lib.openClaude": "Open in Claude",
       "lib.openClaudeTip": "Opens claude.ai in a new tab with the prompt in the chat box (not sent). The prompt is also copied.",
       "lib.openClaudeCopied": "Prompt copied. If the box in Claude is empty, paste it (Ctrl+V).",
-      "lib.saved": "Saved in My prompts", "lib.source": "Source: {0} · License: {1} · Reviewed: {2}",
+      "lib.saved": "Saved in My prompts", "lib.savedOpen": "Saved · Open", "lib.savedOpenTip": "Already in My prompts: click to open it there",
+      "lib.typeGroup": "Prompt type", "mine.untitled": "Untitled", "pal.busy": "Save or close the open window first",
+"lib.source": "Source: {0} · License: {1} · Reviewed: {2}",
       "lib.fieldsNote": "The fields only build the text on this page: nothing is saved or sent (\"Open in Claude\" sends it to claude.ai only when you click it).",
       "lib.original": "Original",
 
@@ -92,7 +94,7 @@
 
       "ui.skip": "Skip to content", "ui.search": "Search", "ui.copiedShort": "Copied",
       "home.eyebrow": "Free · open source · works offline",
-      "home.statPrompts": "prompts", "home.statCats": "marketing tasks", "home.statData": "data sent",
+      "home.statPrompts": "prompts", "home.statCats": "marketing tasks", "home.statData": "sign-ups, cookies or tracking",
       "home.demoOpen": "Open", "home.demoLabel": "Example",
       "home.searchCta": "Search prompts",
       "lib.kbCopy": "copy", "lib.clearFilters": "Clear search and filters",
@@ -165,7 +167,9 @@
       "lib.openClaude": "Apri in Claude",
       "lib.openClaudeTip": "Apre claude.ai in una nuova scheda con il prompt nella casella (non inviato). Il prompt viene anche copiato.",
       "lib.openClaudeCopied": "Prompt copiato. Se in Claude la casella è vuota, incollalo (Ctrl+V).",
-      "lib.saved": "Salvato nei tuoi prompt", "lib.source": "Fonte: {0} · Licenza: {1} · Revisione: {2}",
+      "lib.saved": "Salvato nei tuoi prompt", "lib.savedOpen": "Salvato · Apri", "lib.savedOpenTip": "È già nei tuoi prompt: clicca per aprirlo lì",
+      "lib.typeGroup": "Tipo di prompt", "mine.untitled": "Senza titolo", "pal.busy": "Prima salva o chiudi la finestra aperta",
+"lib.source": "Fonte: {0} · Licenza: {1} · Revisione: {2}",
       "lib.fieldsNote": "I campi servono solo a comporre il testo in questa pagina: nulla viene salvato o inviato (\"Apri in Claude\" lo porta su claude.ai solo quando lo clicchi).",
       "lib.original": "Originale",
 
@@ -193,7 +197,7 @@
 
       "ui.skip": "Vai al contenuto", "ui.search": "Cerca", "ui.copiedShort": "Copiato",
       "home.eyebrow": "Gratis · open source · funziona offline",
-      "home.statPrompts": "prompt", "home.statCats": "attività di marketing", "home.statData": "dati inviati",
+      "home.statPrompts": "prompt", "home.statCats": "attività di marketing", "home.statData": "registrazioni, cookie o tracciamento",
       "home.demoOpen": "Apri", "home.demoLabel": "Esempio",
       "home.searchCta": "Cerca tra i prompt",
       "lib.kbCopy": "copia", "lib.clearFilters": "Azzera ricerca e filtri",

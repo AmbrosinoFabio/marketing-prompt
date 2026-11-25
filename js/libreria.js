@@ -137,22 +137,42 @@
         lista.appendChild(s);
     }
 
+    /** The copy of this library prompt already in My prompts, if any. */
+    function giaSalvato(p) {
+      return MP.store.tutti().filter(function (x) { return x.origine === "lib:" + p.id; })[0] || null;
+    }
+    /** Turns the Save button into "Saved · Open in My prompts" (a second click opens it). */
+    function statoSalvato(b, rec) {
+      b.textContent = "";
+      b.appendChild(MP.icona("ok"));
+      b.appendChild(document.createTextNode(MP.t("lib.savedOpen")));
+      b.title = MP.t("lib.savedOpenTip");
+      b._salvato = rec;
+    }
+
     function apri(p) {
       MP.apriPrompt({
         prompt: p,
         azioniExtra: [{
           etichetta: MP.t("lib.saveMine"),
           icona: "piu",
-          azione: function () {
+          prepara: function (b) {
+            var rec = MP.store.disponibile() && giaSalvato(p);
+            if (rec) statoSalvato(b, rec);
+          },
+          azione: function (testo, dlg, b) {
+            if (b._salvato) { location.href = "miei-prompt.html?usa=" + encodeURIComponent(b._salvato.id); return; }
             if (!MP.store.disponibile()) { MP.toast(MP.t("mine.noStorage")); return; }
-            var ok = MP.store.salva({
+            var rec = giaSalvato(p) || MP.store.salva({
               titolo: p.titolo,
               categoria: p.categoria,
               testo: p.testo,
               note: p.consiglio || "",
+              // keep the field labels and examples, so the fields look the same in My prompts
+              variabili: p.variabili || [],
               origine: "lib:" + p.id
             });
-            if (ok) MP.toast(MP.t("lib.saved"));
+            if (rec) { MP.toast(MP.t("lib.saved")); statoSalvato(b, rec); }
           }
         }]
       });
