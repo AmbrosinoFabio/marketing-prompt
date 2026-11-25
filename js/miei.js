@@ -111,7 +111,7 @@
     function usa(p) {
       MP.apriPrompt({
         prompt: p,
-        azioniExtra: [{ etichetta: MP.t("mine.edit"), azione: function (x, dlg) { dlg.close(); editor(p); } }]
+        azioniExtra: [{ etichetta: MP.t("mine.edit"), icona: "matita", azione: function (x, dlg) { dlg.close(); editor(p); } }]
       });
     }
     /** Used by the quick search and by ?usa=<id> links. */

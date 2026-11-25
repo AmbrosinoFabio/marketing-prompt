@@ -55,6 +55,11 @@
     (window.CATEGORIE || []).forEach(function (c) {
       if (usate[c.id]) chip(c.id, MP.categoria(c.id).nome + " (" + usate[c.id] + ")");
     });
+    // phones: the chips are one sliding row; bring the chosen category (?cat=) into view
+    var scelta = boxCat.querySelector('[aria-pressed="true"]');
+    if (scelta && boxCat.scrollWidth > boxCat.clientWidth) {
+      boxCat.scrollLeft = scelta.getBoundingClientRect().left - boxCat.getBoundingClientRect().left - 16;
+    }
 
     function normalizza(s) {
       return (s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
@@ -143,9 +148,7 @@
     }
     /** Turns the Save button into "Saved · Open in My prompts" (a second click opens it). */
     function statoSalvato(b, rec) {
-      b.textContent = "";
-      b.appendChild(MP.icona("ok"));
-      b.appendChild(document.createTextNode(MP.t("lib.savedOpen")));
+      MP.etichettaBottone(b, "ok", MP.t("lib.savedOpen"));
       b.title = MP.t("lib.savedOpenTip");
       b._salvato = rec;
     }

@@ -124,7 +124,25 @@
     dx.appendChild(prev);
     if (nomi.length) dx.appendChild(el("p", "fonte-riga", MP.t("lib.previewHint")));
 
-    if (sx.childNodes.length) { colonne.appendChild(sx); colonne.appendChild(dx); corpo.appendChild(colonne); }
+    if (sx.childNodes.length) {
+      // small screens show one column at a time: Fields | Preview (CSS hides this switch on wide screens)
+      var viste = el("div", "tipi dlg-viste");
+      viste.setAttribute("role", "group");
+      viste.setAttribute("aria-label", MP.t("lib.view"));
+      colonne.setAttribute("data-vista", "sx");
+      [["sx", nomi.length ? MP.t("lib.fields") : MP.t("lib.details")], ["dx", MP.t("lib.preview")]].forEach(function (v) {
+        var t = el("button", "tab", v[1]);
+        t.type = "button";
+        t.setAttribute("aria-pressed", v[0] === "sx" ? "true" : "false");
+        t.addEventListener("click", function () {
+          colonne.setAttribute("data-vista", v[0]);
+          viste.querySelectorAll(".tab").forEach(function (x) { x.setAttribute("aria-pressed", x === t ? "true" : "false"); });
+        });
+        viste.appendChild(t);
+      });
+      corpo.appendChild(viste);
+      colonne.appendChild(sx); colonne.appendChild(dx); corpo.appendChild(colonne);
+    }
     else corpo.appendChild(dx);
     dlg.appendChild(corpo);
 
@@ -137,7 +155,8 @@
     // Open in Claude: claude.ai/new?q= prefills the chat box (it is never sent automatically).
     // The prompt is also copied, so the user can paste it if the box stays empty
     // (Claude may ask to confirm a prompt that comes from a link, or ignore it if very long).
-    var bClaude = MP.bottone("btn", "esterno", MP.t("lib.openClaude"));
+    var bClaude = MP.bottone("btn sec");
+    MP.etichettaBottone(bClaude, "esterno", MP.t("lib.openClaude"));
     bClaude.title = MP.t("lib.openClaudeTip");
     bClaude.addEventListener("click", function () {
       var testo = MP.compila(p.testo, valori);
@@ -148,13 +167,15 @@
     });
     piede.appendChild(bClaude);
     (opzioni.azioniExtra || []).forEach(function (a) {
-      var b = MP.bottone("btn" + (a.primario ? " primario" : ""), a.icona, a.etichetta);
+      var b = MP.bottone("btn" + (a.primario ? " primario" : " sec"));
+      MP.etichettaBottone(b, a.icona, a.etichetta);
       b.addEventListener("click", function () { a.azione(MP.compila(p.testo, valori), dlg, b); });
       if (a.prepara) a.prepara(b); // lets the action set its initial state (e.g. "Saved")
       piede.appendChild(b);
     });
     if (nomi.length) {
-      var bReset = MP.bottone("btn", null, MP.t("lib.reset"));
+      var bReset = MP.bottone("btn sec");
+      MP.etichettaBottone(bReset, "svuota", MP.t("lib.reset"));
       bReset.addEventListener("click", function () {
         input.forEach(function (i) { i.value = ""; });
         valori = {};
@@ -189,7 +210,11 @@
     dlg.addEventListener("click", function (e) { if (e.target === dlg) dlg.close(); });
     document.body.appendChild(dlg);
     dlg.showModal();
-    if (input[0]) input[0].focus(); else bCopia.focus();
+    // touch screens: focusing a field would pop up the keyboard and cover the dialog,
+    // so focus the title instead (the user taps a field when ready)
+    var touch = window.matchMedia && window.matchMedia("(pointer: coarse)").matches;
+    if (touch) { h.tabIndex = -1; h.focus(); }
+    else if (input[0]) input[0].focus(); else bCopia.focus();
     return dlg;
   };
 })();

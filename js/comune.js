@@ -85,7 +85,9 @@
     piu: "M12 5v14M5 12h14",
     file: "M7 3h7l5 5v13H7zM14 3v5h5",
     nota: "M5 4h14v16H5zM9 8h6M9 12h6M9 16h4",
-    esterno: "M14 4h6v6M20 4l-9 9M18 14v6H4V6h6"
+    esterno: "M14 4h6v6M20 4l-9 9M18 14v6H4V6h6",
+    svuota: "M4 12a8 8 0 1 0 2.4-5.7M4 4v4h4",
+    matita: "M4 20h4L19 9l-4-4L4 16zM13.5 6.5l4 4"
   };
   MP.icona = function (nome) {
     var ns = "http://www.w3.org/2000/svg";
@@ -175,6 +177,16 @@
     if (icona) b.appendChild(MP.icona(icona));
     if (testo) b.appendChild(document.createTextNode(testo));
     return b;
+  };
+
+  /** Sets icon + label on a secondary button. The label sits in .etich, which small
+      screens hide (icon-only button): the name stays in aria-label and in the tooltip. */
+  MP.etichettaBottone = function (b, icona, testo) {
+    b.textContent = "";
+    if (icona) b.appendChild(MP.icona(icona));
+    b.appendChild(MP.el("span", "etich", testo));
+    b.setAttribute("aria-label", testo);
+    b.title = b.title || testo;
   };
 
   /** Trova le variabili {nome} in un testo, senza doppioni, nell'ordine in cui compaiono. */

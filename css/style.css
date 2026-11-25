@@ -164,6 +164,7 @@ dialog::backdrop{background:rgb(5 5 10 / .6);backdrop-filter:blur(3px)}
 .dlg-testa{display:flex;gap:12px;align-items:flex-start;padding:18px 22px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--bg2);z-index:2}
 .dlg-titoli{flex:1;display:grid;gap:6px;justify-items:start}
 .dlg-testa h2{font-size:1.2rem;line-height:1.3;font-weight:600;letter-spacing:-.02em}
+.dlg-testa h2:focus{outline:none} /* focused by script on touch screens, not a control */
 .dlg-corpo{padding:20px 22px;display:grid;gap:22px}
 .dlg-colonne{display:grid;gap:22px;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);align-items:start}
 .dlg-sx,.dlg-dx{display:grid;gap:14px;align-content:start}
@@ -265,6 +266,44 @@ th{background:var(--bg2);color:var(--ink);font-weight:600}
 .fonte-box{border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-size:.85rem;color:var(--ink2);display:grid;gap:4px;background:var(--bg)}
 .fonte-box strong{color:var(--ink)}
 .griglia{row-gap:12px}
+
+/* ---------- phones: library filters on one sliding row each ----------
+   (wrapped, the tabs and 13 category chips filled the whole first screen) */
+@media (max-width:640px){
+  .hero.compatto{padding:28px 0 4px}
+  .hero.compatto p{font-size:.92rem}
+  .solo-largo{display:none}
+  .gruppo-testa p{display:none} /* source and license are shown on every adapted prompt */
+  .tipi{display:flex;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;max-width:100%}
+  .categorie{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-inline:calc(-1 * var(--pad));padding-inline:var(--pad);scroll-padding-inline:var(--pad);scroll-snap-type:x proximity;margin-bottom:14px;
+    -webkit-mask-image:linear-gradient(to right,#000 85%,transparent);mask-image:linear-gradient(to right,#000 85%,transparent)}
+  .tipi::-webkit-scrollbar,.categorie::-webkit-scrollbar{display:none}
+  .tab,.chip{flex:none;white-space:nowrap;scroll-snap-align:start}
+}
+
+/* ---------- phones: prompt dialog ----------
+   Fields / Preview switch (the preview was far below the fields) and a one-row footer:
+   "Copy" with its label, the other actions as icons (their name is in aria-label/title). */
+.dlg-viste{display:none}
+@media (max-width:820px){
+  dialog{max-height:calc(100dvh - 24px)}
+  .dlg-viste{display:flex;margin:-4px 0 0}
+  .dlg-viste .tab{flex:1}
+  .dlg-colonne[data-vista="sx"] > .dlg-dx,
+  .dlg-colonne[data-vista="dx"] > .dlg-sx{display:none}
+  .dlg-colonne{gap:0}
+}
+@media (max-width:640px){
+  dialog{width:calc(100vw - 16px);max-height:calc(100dvh - 16px)}
+  .dlg-testa{padding:14px 16px}
+  .dlg-testa .muted{display:none}
+  .dlg-corpo{padding:14px 16px;gap:14px}
+  .dlg-piede{flex-wrap:nowrap;padding:10px 16px;gap:6px}
+  .dlg-piede .btn.primario{flex:1;min-width:0}
+  .dlg-piede .btn.sec{width:40px;height:40px;padding:0;flex:none}
+  .dlg-piede .btn.sec .etich{display:none}
+  .dlg-piede .btn{height:40px}
+}
 
 /* the hidden attribute always wins over display rules (e.g. .btn) */
 [hidden]{display:none !important}
