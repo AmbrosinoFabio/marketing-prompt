@@ -58,6 +58,8 @@
     var nomi = MP.variabiliIn(p.testo);
     var valori = {};
     var input = [];
+    var campoPer = {}; // field name → its input
+    var esempioPer = {}; // field name → example usable as a value ("(paste …)" hints are not)
 
     if (nomi.length) {
       sx.appendChild(el("h3", null, MP.t("lib.fields")));
@@ -69,11 +71,15 @@
         var inp = document.createElement(lungo ? "textarea" : "input");
         if (lungo) { inp.rows = 3; inp.className = "corto testo-normale"; }
         else inp.type = "text";
-        inp.placeholder = info.esempio || "";
+        // "e.g." prefix: without it the grey example looked like a value already typed in
+        // ("paste your text here" is an instruction, not an example: no prefix)
+        inp.placeholder = !info.esempio ? "" : lungo ? info.esempio : MP.t("lib.eg", info.esempio);
         inp.addEventListener("input", function () { valori[n] = inp.value; aggiorna(); });
         lab.appendChild(inp);
         campi.appendChild(lab);
         input.push(inp);
+        campoPer[n] = inp;
+        if (info.esempio && !lungo) esempioPer[n] = info.esempio;
       });
       sx.appendChild(campi);
       sx.appendChild(el("p", "fonte-riga", MP.t("lib.fieldsNote")));
@@ -148,8 +154,47 @@
 
     // ----- footer -----
     var piede = el("div", "dlg-piede");
+
+    // Empty fields: the AI would receive "{brand}" as it is. Before copying or opening
+    // Claude, say which fields are empty and offer "Use the examples" or "Copy anyway".
+    var avvisoCampi = el("div", "avviso-campi");
+    avvisoCampi.setAttribute("role", "alert");
+    avvisoCampi.hidden = true;
+    piede.appendChild(avvisoCampi);
+    function vuoti() {
+      return nomi.filter(function (n) { return !(valori[n] || "").trim(); });
+    }
+    function controllaCampi(azione, chiaveComunque) {
+      var v = vuoti();
+      if (!v.length) { avvisoCampi.hidden = true; azione(); return; }
+      avvisoCampi.textContent = "";
+      avvisoCampi.appendChild(el("span", null, v.length === 1 ? MP.t("lib.empty1", "{" + v[0] + "}")
+        : MP.t("lib.emptyN", v.length, v.map(function (n) { return "{" + n + "}"; }).join(", "))));
+      var azioni = el("span", "azioni-avviso");
+      var conEsempio = v.filter(function (n) { return esempioPer[n]; });
+      if (conEsempio.length) {
+        var bEs = MP.bottone("btn piccolo", null, MP.t("lib.useExamples"));
+        bEs.addEventListener("click", function () {
+          conEsempio.forEach(function (n) { campoPer[n].value = esempioPer[n]; valori[n] = esempioPer[n]; });
+          aggiorna();
+          MP.toast(MP.t("lib.examplesIn"));
+          var restano = vuoti(); // fields with no usable example ("paste your text here")
+          if (restano.length) { controllaCampi(azione, chiaveComunque); campoPer[restano[0]].focus(); }
+          else { avvisoCampi.hidden = true; campoPer[conEsempio[0]].focus(); }
+        });
+        azioni.appendChild(bEs);
+      }
+      var bComunque = MP.bottone("btn piccolo", null, MP.t(chiaveComunque));
+      bComunque.addEventListener("click", function () { avvisoCampi.hidden = true; azione(); });
+      azioni.appendChild(bComunque);
+      avvisoCampi.appendChild(azioni);
+      avvisoCampi.hidden = false;
+      (conEsempio.length ? azioni.firstChild : bComunque).focus();
+    }
+
     var bCopia = MP.bottone("btn primario", "copia", MP.t("lib.copy"));
-    var copia = function () { MP.copia(MP.compila(p.testo, valori), bCopia); };
+    var copiaSubito = function () { MP.copia(MP.compila(p.testo, valori), bCopia); };
+    var copia = function () { controllaCampi(copiaSubito, "lib.copyAnyway"); };
     bCopia.addEventListener("click", copia);
     piede.appendChild(bCopia);
     // Open in Claude: claude.ai/new?q= prefills the chat box (it is never sent automatically).
@@ -158,13 +203,14 @@
     var bClaude = MP.bottone("btn sec");
     MP.etichettaBottone(bClaude, "esterno", MP.t("lib.openClaude"));
     bClaude.title = MP.t("lib.openClaudeTip");
-    bClaude.addEventListener("click", function () {
+    var apriClaude = function () {
       var testo = MP.compila(p.testo, valori);
       MP.copia(testo, null, MP.t("lib.openClaudeCopied"));
       var url = "https://claude.ai/new?q=" + encodeURIComponent(testo);
       if (url.length > MAX_URL_CLAUDE) url = "https://claude.ai/new";
       window.open(url, "_blank", "noopener,noreferrer");
-    });
+    };
+    bClaude.addEventListener("click", function () { controllaCampi(apriClaude, "lib.openAnyway"); });
     piede.appendChild(bClaude);
     (opzioni.azioniExtra || []).forEach(function (a) {
       var b = MP.bottone("btn" + (a.primario ? " primario" : " sec"));
@@ -179,6 +225,7 @@
       bReset.addEventListener("click", function () {
         input.forEach(function (i) { i.value = ""; });
         valori = {};
+        avvisoCampi.hidden = true;
         aggiorna();
         if (input[0]) input[0].focus();
       });
@@ -192,7 +239,10 @@
     piede.appendChild(sugg);
     dlg.appendChild(piede);
 
-    function aggiorna() { MP.anteprima(prev, p.testo, valori); }
+    function aggiorna() {
+      MP.anteprima(prev, p.testo, valori);
+      if (!avvisoCampi.hidden && !vuoti().length) avvisoCampi.hidden = true; // all filled in now
+    }
     aggiorna();
 
     // C copies, unless the user is typing in a field

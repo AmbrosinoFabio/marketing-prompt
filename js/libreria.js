@@ -65,16 +65,40 @@
       return (s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
     }
 
+    // "Start here": easy prompts with few fields, shown first when no search or filter is active
+    var INIZIA = ["email-oggetti", "social-riuso-contenuto", "strategia-obiettivi-smart", "copy-riscrivi-pas"];
+
+    /** Search relevance: a word in the title counts more than one in the description,
+        which counts more than one only in the prompt text. 0 = not every word found. */
+    function punteggio(p, parole) {
+      var titolo = normalizza(p.titolo), desc = normalizza(p.descrizione);
+      var altro = normalizza([MP.categoria(p.categoria).nome, (p.tecniche || []).join(" ")].join(" "));
+      var testo = normalizza(p.testo);
+      var tot = 0;
+      for (var i = 0; i < parole.length; i++) {
+        var w = parole[i];
+        if (titolo.indexOf(w) >= 0) tot += 10;
+        else if (desc.indexOf(w) >= 0) tot += 5;
+        else if (altro.indexOf(w) >= 0) tot += 3;
+        else if (testo.indexOf(w) >= 0) tot += 1;
+        else return 0;
+      }
+      return tot;
+    }
+
     function disegna() {
       var q = normalizza(cerca.value.trim());
       var parole = q ? q.split(/\s+/) : [];
+      var punti = {};
       var filtrati = tutti.filter(function (p) {
         if (catAttiva && p.categoria !== catAttiva) return false;
         if (tipoAttivo && (p.tipo === "adattato" ? "adattato" : "originale") !== tipoAttivo) return false;
         if (!parole.length) return true;
-        var testo = normalizza([p.titolo, p.descrizione, p.testo, MP.categoria(p.categoria).nome, (p.tecniche || []).join(" ")].join(" "));
-        return parole.every(function (w) { return testo.indexOf(w) >= 0; });
+        punti[p.id] = punteggio(p, parole);
+        return punti[p.id] > 0;
       });
+      // with a search, best matches first (the sort is stable: ties keep the usual order)
+      if (parole.length) filtrati.sort(function (a, b) { return punti[b.id] - punti[a.id]; });
 
       conteggio.textContent = filtrati.length === 1 ? MP.t("lib.count1") : MP.t("lib.count", filtrati.length);
       lista.textContent = "";
@@ -93,8 +117,20 @@
         return;
       }
 
-      // two sections on the same page: adapted from sources, then original
-      [["adattato", "lib.secSrc", "lib.secSrcD"], ["originale", "lib.secOrig", "lib.secOrigD"]].forEach(function (g) {
+      // no search or filter: a short "Start here" row for first-time visitors
+      if (!parole.length && !catAttiva && !tipoAttivo) {
+        var facili = INIZIA.map(function (id) { return tutti.filter(function (p) { return p.id === id; })[0]; }).filter(Boolean);
+        if (facili.length) {
+          var ti = MP.el("div", "gruppo-testa inizia");
+          ti.appendChild(MP.el("h2", null, MP.t("lib.start")));
+          ti.appendChild(MP.el("p", null, MP.t("lib.startD")));
+          lista.appendChild(ti);
+          facili.forEach(scheda);
+        }
+      }
+
+      // two sections on the same page: original prompts (simpler), then adapted from sources
+      [["originale", "lib.secOrig", "lib.secOrigD"], ["adattato", "lib.secSrc", "lib.secSrcD"]].forEach(function (g) {
         var gruppo = filtrati.filter(function (p) { return (p.tipo === "adattato" ? "adattato" : "originale") === g[0]; });
         if (!gruppo.length) return;
         var testa = MP.el("div", "gruppo-testa");

@@ -51,6 +51,9 @@
       });
 
       lista.textContent = "";
+      // nothing saved yet: no toolbar (nothing to search, filter or export), only the empty state
+      document.getElementById("barraAzioni").hidden = !tutti.length;
+      document.getElementById("barraFiltri").hidden = !tutti.length;
       if (!tutti.length) {
         var v = MP.el("div", "vuoto");
         v.appendChild(MP.el("p", null, MP.t("mine.empty")));
@@ -62,6 +65,10 @@
         lib.href = "prompt.html";
         az.appendChild(lib);
         v.appendChild(az);
+        var imp = MP.el("button", "link-bottone", MP.t("mine.importLink"));
+        imp.type = "button";
+        imp.addEventListener("click", function () { fileImporta.click(); });
+        v.appendChild(imp);
         lista.appendChild(v);
         return;
       }
@@ -100,9 +107,14 @@
           MP.store.salva(copia);
           disegna();
         });
-        bottone(MP.t("mine.delete"), "pericolo", function () {
+        // Delete: icon button in the top row, next to the star (in the bottom row, with
+        // Use / Edit / Duplicate, it wrapped onto a line of its own). It asks before deleting.
+        var bElimina = MP.bottone("btn piccolo pericolo icona-sola");
+        MP.etichettaBottone(bElimina, "cestino", MP.t("mine.delete"));
+        bElimina.addEventListener("click", function () {
           if (confirm(MP.t("mine.confirmDel", p.titolo))) { MP.store.elimina(p.id); MP.toast(MP.t("mine.deleted")); disegna(); }
         });
+        top.appendChild(bElimina);
         s.appendChild(piede);
         lista.appendChild(s);
       });

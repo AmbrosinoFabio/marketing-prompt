@@ -87,7 +87,8 @@
     nota: "M5 4h14v16H5zM9 8h6M9 12h6M9 16h4",
     esterno: "M14 4h6v6M20 4l-9 9M18 14v6H4V6h6",
     svuota: "M4 12a8 8 0 1 0 2.4-5.7M4 4v4h4",
-    matita: "M4 20h4L19 9l-4-4L4 16zM13.5 6.5l4 4"
+    matita: "M4 20h4L19 9l-4-4L4 16zM13.5 6.5l4 4",
+    cestino: "M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"
   };
   MP.icona = function (nome) {
     var ns = "http://www.w3.org/2000/svg";

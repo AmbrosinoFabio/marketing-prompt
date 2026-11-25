@@ -55,7 +55,7 @@
           <p data-i18n="home.lead">An open library of prompts for Claude and other AI assistants, organized by marketing task. Fill in the fields, copy, paste — and keep your own prompts in your browser.</p>
           <div class="azioni">
             <a class="btn primario" href="prompt.html" data-i18n="home.ctaLib">Browse the library</a>
-            <a class="btn" href="miei-prompt.html" data-i18n="home.ctaMine">Save your prompts</a>
+            <a class="btn" href="prompt.html?id=email-sequenza-benvenuto" data-i18n="home.ctaTry">Try an example</a>
           </div>
           <div class="stat-riga">
             <span><b id="statPrompt">72</b><span data-i18n="home.statPrompts">prompts</span></span>
@@ -67,10 +67,21 @@
           <div class="demo-testa">
             <span class="etichetta" data-i18n="home.demoLabel">Example</span>
             <h2 id="demoTitolo">Welcome sequence (5 emails)</h2>
-            <button class="btn piccolo primario" id="demoApri" type="button" data-i18n="home.demoOpen">Open</button>
+            <button class="btn piccolo" id="demoApri" type="button" data-i18n="home.demoOpen">Open</button>
           </div>
           <div class="anteprima" id="demoTesto"></div>
         </div>
+      </div>
+    </section>
+
+    <section class="sezione passi-sez" aria-labelledby="titoloPassi">
+      <div class="wrap">
+        <h2 id="titoloPassi" data-i18n="home.how">How it works</h2>
+        <ol class="passi">
+          <li><strong data-i18n="home.step1">Pick a task</strong><span data-i18n="home.step1D">Search the library or browse by marketing task: emails, ads, SEO, social…</span></li>
+          <li><strong data-i18n="home.step2">Fill in the fields</strong><span data-i18n="home.step2D">Brand, audience, tone: the preview shows the finished prompt as you type.</span></li>
+          <li><strong data-i18n="home.step3">Paste it into Claude</strong><span data-i18n="home.step3D">Copy it, or open it straight in Claude. Save the ones you like in My prompts.</span></li>
+        </ol>
       </div>
     </section>
 

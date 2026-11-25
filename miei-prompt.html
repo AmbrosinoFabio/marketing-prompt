@@ -62,13 +62,13 @@
         </div>
         <div class="avviso" id="avviso-storage" hidden></div>
 
-        <div class="barra">
+        <div class="barra" id="barraAzioni">
           <button class="btn primario" id="btnNuovo" type="button" data-i18n="mine.new">New prompt</button>
           <button class="btn" id="btnEsporta" type="button" data-i18n="mine.export">Export backup</button>
           <button class="btn" id="btnImporta" type="button" data-i18n="mine.import">Import backup</button>
           <input type="file" id="fileImporta" accept="application/json,.json" hidden>
         </div>
-        <div class="barra">
+        <div class="barra" id="barraFiltri">
           <label class="sr" for="cerca" data-i18n="mine.search">Search your prompts</label>
           <input class="cerca" id="cerca" type="search" autocomplete="off" placeholder="Search your prompts…" data-i18n-attr="placeholder:mine.search">
           <label class="sr" for="filtro-cat" data-i18n="mine.allCats">All categories</label>
