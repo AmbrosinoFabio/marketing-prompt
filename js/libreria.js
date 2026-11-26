@@ -61,9 +61,6 @@
       boxCat.scrollLeft = scelta.getBoundingClientRect().left - boxCat.getBoundingClientRect().left - 16;
     }
 
-    function normalizza(s) {
-      return (s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
-    }
 
     // "Start here": easy prompts with few fields, shown first when no search or filter is active
     var INIZIA = ["email-oggetti", "social-riuso-contenuto", "strategia-obiettivi-smart", "copy-riscrivi-pas"];
@@ -71,9 +68,9 @@
     /** Search relevance: a word in the title counts more than one in the description,
         which counts more than one only in the prompt text. 0 = not every word found. */
     function punteggio(p, parole) {
-      var titolo = normalizza(p.titolo), desc = normalizza(p.descrizione);
-      var altro = normalizza([MP.categoria(p.categoria).nome, (p.tecniche || []).join(" ")].join(" "));
-      var testo = normalizza(p.testo);
+      var titolo = MP.normalizza(p.titolo), desc = MP.normalizza(p.descrizione);
+      var altro = MP.normalizza([MP.categoria(p.categoria).nome, (p.tecniche || []).join(" ")].join(" "));
+      var testo = MP.normalizza(p.testo);
       var tot = 0;
       for (var i = 0; i < parole.length; i++) {
         var w = parole[i];
@@ -87,7 +84,7 @@
     }
 
     function disegna() {
-      var q = normalizza(cerca.value.trim());
+      var q = MP.normalizza(cerca.value.trim());
       var parole = q ? q.split(/\s+/) : [];
       var punti = {};
       var filtrati = tutti.filter(function (p) {
@@ -167,6 +164,8 @@
 
         var piede = MP.el("div", "piede-scheda");
         var apriB = MP.bottone("btn piccolo primario", null, n ? MP.t("lib.fillCopy") : MP.t("lib.open"));
+        apriB.tabIndex = -1; // same action as the card button: one keyboard stop per card
+        apriB.setAttribute("aria-hidden", "true");
         apriB.addEventListener("click", function () { apri(p); });
         piede.appendChild(apriB);
         if (!n) {

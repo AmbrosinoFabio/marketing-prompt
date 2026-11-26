@@ -7,15 +7,16 @@
    - When a refreshed file differs from the cached one, open pages get a message and
      js/pwa.js shows "A new version is available – Reload" (no manual version bump needed).
    Bump VERSIONE when files are added to or removed from FILE_APP. */
-var VERSIONE = "mp-v2";
+var VERSIONE = "mp-v3";
 var FILE_APP = [
   "./", "index.html", "prompt.html", "miei-prompt.html", "fonti.html", "404.html",
   "css/style.css",
   "js/i18n.js", "js/comune.js", "js/store.js", "js/dialogo.js", "js/palette.js",
-  "js/libreria.js", "js/miei.js", "js/home.js", "js/pwa.js",
+  "js/libreria.js", "js/miei.js", "js/home.js", "js/pwa.js", "js/dati-lingua.js",
   "data/categorie.js", "data/prompts.js", "data/prompts-it.js", "data/news.js",
   "fonts/geist.woff2", "fonts/geist-mono.woff2",
-  "img/icon-192.png", "img/icon-512.png", "manifest.webmanifest"
+  "img/icon-192.png", "img/icon-512.png", "img/icon-maskable-512.png",
+  "img/apple-touch-icon.png", "img/og.png", "manifest.webmanifest"
 ];
 
 /** True if the copy from the network differs from the cached one.
@@ -51,13 +52,21 @@ self.addEventListener("fetch", function (e) {
   var url = new URL(req.url);
   if (url.origin !== location.origin) return; // external links: browser default
 
-  // news: network first
+  // news: network first, but never more than 3 seconds (news.js blocks the home page);
+  // only good answers are saved, a slow or failed one falls back to the saved copy
   if (url.pathname.endsWith("/data/news.js")) {
-    e.respondWith(fetch(req).then(function (r) {
+    var rete = fetch(req);
+    e.waitUntil(rete.then(function (r) {
+      if (!r.ok) return;
       var copia = r.clone();
-      caches.open(VERSIONE).then(function (c) { c.put(req, copia); });
-      return r;
-    }).catch(function () { return caches.match(req, { ignoreSearch: true }); }));
+      return caches.open(VERSIONE).then(function (c) { return c.put(req, copia); });
+    }).catch(function () { /* offline */ }));
+    var salvata = function () { return caches.match(req, { ignoreSearch: true }); };
+    var attesa = new Promise(function (ok) { setTimeout(ok, 3000); }).then(salvata);
+    e.respondWith(Promise.race([
+      rete.then(function (r) { return r.ok ? r : salvata().then(function (c) { return c || r; }); }),
+      attesa.then(function (c) { return c || rete; })
+    ]).catch(function () { return salvata().then(function (c) { return c || Response.error(); }); }));
     return;
   }
 

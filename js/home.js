@@ -1,7 +1,7 @@
 /* Home page: category cards and automatic news.
    News comes from data/news.js (written every day by tools/aggiorna_news.py).
-   When the site is opened locally (file://) and online, it also tries to load the
-   latest news.js from the published site: a <script> tag has no CORS limits. */
+   When the site is opened locally (file://) and online, it also asks the published site
+   for data/news.json: plain data (never remote code), read with a 5-second limit. */
 (function () {
   "use strict";
   var MP = window.MP;
@@ -88,16 +88,18 @@
     disegnaNews();
 
     // local copy: try to get fresher news from the published site
-    if (location.protocol === "file:" && navigator.onLine) {
-      var locale = window.NEWS;
-      var s = document.createElement("script");
-      s.src = SITO_LIVE + "data/news.js?t=" + Date.now();
-      s.onload = function () {
-        if (!window.NEWS || !locale || window.NEWS.aggiornato >= (locale.aggiornato || "")) disegnaNews();
-        else window.NEWS = locale;
-      };
-      s.onerror = function () { window.NEWS = locale; };
-      document.body.appendChild(s);
+    if (location.protocol === "file:" && navigator.onLine && window.fetch) {
+      var stop = window.AbortController ? new AbortController() : null;
+      var timer = setTimeout(function () { if (stop) stop.abort(); }, 5000);
+      fetch(SITO_LIVE + "data/news.json", { cache: "no-cache", signal: stop ? stop.signal : undefined })
+        .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+        .then(function (nuove) {
+          var locale = window.NEWS || {};
+          if (!nuove || !Array.isArray(nuove.voci) || typeof nuove.aggiornato !== "string") return;
+          if (nuove.aggiornato > (locale.aggiornato || "")) { window.NEWS = nuove; disegnaNews(); }
+        })
+        .catch(function () { /* offline or slow: keep the local copy */ })
+        .then(function () { clearTimeout(timer); });
     }
   });
 })();

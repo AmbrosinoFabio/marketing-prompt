@@ -64,6 +64,11 @@
   });
 
 
+  /** Lowercase text without accents, for searches ("Caffè" -> "caffe"). */
+  MP.normalizza = function (s) {
+    return (s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+  };
+
   /** Crea un elemento con testo sicuro (mai innerHTML con dati esterni o dell'utente). */
   MP.el = function (tag, classe, testo) {
     var e = document.createElement(tag);

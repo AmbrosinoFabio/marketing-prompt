@@ -49,7 +49,7 @@ In that case start the small local server included (requires [Python](https://ww
 ### Updating
 
 `git pull`, or download the ZIP again (your prompts are not touched, but export them first).
-When opened offline, the home page also tries to load the latest news from the live site.
+When opened as a local file, the home page also asks the live site for the latest news (`data/news.json`, plain data, 5-second limit).
 
 ## For developers
 
@@ -65,17 +65,20 @@ js/i18n.js        languages (EN default + IT) — load first
 js/comune.js      theme, menu, copy, variables {name}
 js/store.js       "My prompts" storage, export/import
 js/dialogo.js     dialog to fill in and copy a prompt
+js/dati-lingua.js loads data/prompts-it.js only when the page is in Italian
 js/libreria.js  js/miei.js  js/home.js
 data/prompts.js      prompts (English, main)
 data/prompts-it.js   Italian translation (same ids)
 data/categorie.js    categories EN + IT
-data/news.js         generated: do not edit
+data/news.js         generated: do not edit (news.json = same data for tools and local copies)
 tools/fonti.py           news sources and watched pages
 tools/aggiorna_news.py   updates data/news.js (standard library only)
 tools/valida_prompt.py   checks the prompt library
 .github/workflows/news.yml   runs the update every day at 06:00 UTC
 .github/workflows/valida.yml checks the prompts on every push / pull request that changes them
 ```
+
+**Security:** every page has a Content-Security-Policy meta tag (scripts and styles only from the site itself, no inline code): keep new code in `js/` files and use no `onclick=` or `style=` attributes.
 
 **Adding a prompt:** add it to `data/prompts.js` and its translation to `data/prompts-it.js`
 (same `id`), then run `python tools/valida_prompt.py`.

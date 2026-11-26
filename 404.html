@@ -4,11 +4,13 @@
   <meta charset="utf-8">
   <base href="/marketing-prompt/">
   <meta name="robots" content="noindex">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://ambrosinofabio.github.io; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Page not found — Marketing Prompt</title>
   <meta name="title-en" content="Page not found — Marketing Prompt">
   <meta name="title-it" content="Pagina non trovata — Marketing Prompt">
   <meta name="description" content="This page does not exist.">
+  <meta name="description-it" content="Questa pagina non esiste.">
   <link rel="canonical" href="https://ambrosinofabio.github.io/marketing-prompt/404.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Marketing Prompt">
@@ -57,7 +59,7 @@
         <div class="azioni">
           <a class="btn primario" href="prompt.html" data-i18n="home.ctaLib">Browse the library</a>
           <a class="btn" href="index.html" data-i18n="nav.home">Home</a>
-          <button class="btn" type="button" onclick="MP.apriPalette()"><span data-i18n="ui.search">Search</span> <span class="kbd">Ctrl K</span></button>
+          <button class="btn" type="button" data-apri-palette><span data-i18n="ui.search">Search</span> <span class="kbd">Ctrl K</span></button>
         </div>
       </div>
     </section>
@@ -86,7 +88,7 @@
   </footer>
   <script src="data/categorie.js"></script>
   <script src="data/prompts.js"></script>
-  <script src="data/prompts-it.js"></script>
+  <script src="js/dati-lingua.js"></script>
   <script src="js/store.js"></script>
   <script src="js/palette.js"></script>
   <script src="js/pwa.js"></script>

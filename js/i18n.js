@@ -302,6 +302,17 @@
     }
     var titolo = document.querySelector("meta[name='title-" + lingua + "']");
     if (titolo) document.title = titolo.content;
+    if (lingua !== "en") {
+      var desc = document.querySelector("meta[name='description-" + lingua + "']");
+      var descBase = document.querySelector("meta[name='description']");
+      if (desc && descBase) descBase.content = desc.content;
+    }
+    // an explicit ?lang=it page is its own (Italian) version for search engines:
+    // its canonical matches the hreflang="it" address instead of the English page
+    var canon = document.querySelector("link[rel='canonical']");
+    if (canon && lingua !== "en" && /[?&]lang=/.test(location.search) && !/\?/.test(canon.href)) {
+      canon.href = canon.href + "?lang=" + lingua;
+    }
 
     // switch button
     var btn = document.getElementById("btnLingua");

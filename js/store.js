@@ -69,11 +69,13 @@
     disponibile: disponibile,
     tutti: leggiTutti,
 
-    salva: function (p) {
+    /** Saves a prompt. With soloPreferito (star toggle) the "edited" date is kept,
+        so the list does not reorder just because a star changed. */
+    salva: function (p, soloPreferito) {
       var lista = leggiTutti();
       var ora = new Date().toISOString();
       var rec = pulisci(p);
-      rec.modificato = ora;
+      if (!soloPreferito) rec.modificato = ora;
       var i = lista.findIndex(function (x) { return x.id === rec.id; });
       if (i >= 0) { rec.creato = lista[i].creato; lista[i] = rec; }
       else { rec.creato = ora; lista.unshift(rec); }

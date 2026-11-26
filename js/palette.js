@@ -5,7 +5,6 @@
   "use strict";
   var MP = window.MP;
 
-  function normalizza(s) { return (s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, ""); }
 
   /** Goes to an internal page keeping the chosen language. */
   MP.vai = function (url) {
@@ -104,11 +103,11 @@
   }
 
   function disegna() {
-    var q = normalizza(input.value.trim()), parole = q ? q.split(/\s+/) : [];
+    var q = MP.normalizza(input.value.trim()), parole = q ? q.split(/\s+/) : [];
     var tutte = voci();
     risultati = tutte.filter(function (v) {
       if (!parole.length) return true; // the per-group limit below keeps the list short
-      var t = normalizza(v.titolo + " " + (v.sub || "") + " " + (v.cerca || ""));
+      var t = MP.normalizza(v.titolo + " " + (v.sub || "") + " " + (v.cerca || ""));
       return parole.every(function (w) { return t.indexOf(w) >= 0; });
     });
     // limit per group
@@ -124,6 +123,7 @@
     }
 
     lista.textContent = "";
+    input.setAttribute("aria-expanded", risultati.length ? "true" : "false");
     if (!risultati.length) { lista.appendChild(MP.el("li", "pal-vuoto", MP.t("pal.none"))); return; }
     var ultimo = "";
     risultati.forEach(function (v, i) {
@@ -190,5 +190,6 @@
   document.addEventListener("DOMContentLoaded", function () {
     var b = document.getElementById("btnCerca");
     if (b) b.addEventListener("click", MP.apriPalette);
+    document.querySelectorAll("[data-apri-palette]").forEach(function (x) { x.addEventListener("click", MP.apriPalette); });
   });
 })();

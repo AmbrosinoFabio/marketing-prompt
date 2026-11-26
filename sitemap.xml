@@ -1,7 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://ambrosinofabio.github.io/marketing-prompt/</loc><lastmod>2026-11-19</lastmod></url>
-  <url><loc>https://ambrosinofabio.github.io/marketing-prompt/prompt.html</loc><lastmod>2026-11-19</lastmod></url>
-  <url><loc>https://ambrosinofabio.github.io/marketing-prompt/miei-prompt.html</loc><lastmod>2026-11-19</lastmod></url>
-  <url><loc>https://ambrosinofabio.github.io/marketing-prompt/fonti.html</loc><lastmod>2026-11-19</lastmod></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://ambrosinofabio.github.io/marketing-prompt/</loc><lastmod>2026-11-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ambrosinofabio.github.io/marketing-prompt/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://ambrosinofabio.github.io/marketing-prompt/?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ambrosinofabio.github.io/marketing-prompt/"/>
+  </url>
+  <url>
+    <loc>https://ambrosinofabio.github.io/marketing-prompt/?lang=it</loc><lastmod>2026-11-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ambrosinofabio.github.io/marketing-prompt/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://ambrosinofabio.github.io/marketing-prompt/?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ambrosinofabio.github.io/marketing-prompt/"/>
+  </url>
+  <url>
+    <loc>https://ambrosinofabio.github.io/marketing-prompt/prompt.html</loc><lastmod>2026-11-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ambrosinofabio.github.io/marketing-prompt/prompt.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://ambrosinofabio.github.io/marketing-prompt/prompt.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ambrosinofabio.github.io/marketing-prompt/prompt.html"/>
+  </url>
+  <url>
+    <loc>https://ambrosinofabio.github.io/marketing-prompt/prompt.html?lang=it</loc><lastmod>2026-11-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ambrosinofabio.github.io/marketing-prompt/prompt.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://ambrosinofabio.github.io/marketing-prompt/prompt.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ambrosinofabio.github.io/marketing-prompt/prompt.html"/>
+  </url>
+  <url>
+    <loc>https://ambrosinofabio.github.io/marketing-prompt/miei-prompt.html</loc><lastmod>2026-11-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ambrosinofabio.github.io/marketing-prompt/miei-prompt.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://ambrosinofabio.github.io/marketing-prompt/miei-prompt.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ambrosinofabio.github.io/marketing-prompt/miei-prompt.html"/>
+  </url>
+  <url>
+    <loc>https://ambrosinofabio.github.io/marketing-prompt/miei-prompt.html?lang=it</loc><lastmod>2026-11-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ambrosinofabio.github.io/marketing-prompt/miei-prompt.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://ambrosinofabio.github.io/marketing-prompt/miei-prompt.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ambrosinofabio.github.io/marketing-prompt/miei-prompt.html"/>
+  </url>
+  <url>
+    <loc>https://ambrosinofabio.github.io/marketing-prompt/fonti.html</loc><lastmod>2026-11-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ambrosinofabio.github.io/marketing-prompt/fonti.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://ambrosinofabio.github.io/marketing-prompt/fonti.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ambrosinofabio.github.io/marketing-prompt/fonti.html"/>
+  </url>
+  <url>
+    <loc>https://ambrosinofabio.github.io/marketing-prompt/fonti.html?lang=it</loc><lastmod>2026-11-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ambrosinofabio.github.io/marketing-prompt/fonti.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://ambrosinofabio.github.io/marketing-prompt/fonti.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ambrosinofabio.github.io/marketing-prompt/fonti.html"/>
+  </url>
 </urlset>

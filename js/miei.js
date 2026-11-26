@@ -33,15 +33,14 @@
     }
     opzioniCategorie(selCat, true);
 
-    function normalizza(s) { return (s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, ""); }
 
     function disegna() {
       var tutti = MP.store.tutti();
-      var q = normalizza(cerca.value.trim()), parole = q ? q.split(/\s+/) : [];
+      var q = MP.normalizza(cerca.value.trim()), parole = q ? q.split(/\s+/) : [];
       var filtrati = tutti.filter(function (p) {
         if (soloPreferiti && !p.preferito) return false;
         if (selCat.value && p.categoria !== selCat.value) return false;
-        var t = normalizza(p.titolo + " " + p.testo + " " + p.note);
+        var t = MP.normalizza(p.titolo + " " + p.testo + " " + p.note);
         return parole.every(function (w) { return t.indexOf(w) >= 0; });
       });
       // favorites first, then most recently edited
@@ -84,7 +83,7 @@
         stella.setAttribute("aria-pressed", p.preferito ? "true" : "false");
         stella.setAttribute("aria-label", MP.t(p.preferito ? "mine.favOn" : "mine.favOff"));
         stella.title = stella.getAttribute("aria-label");
-        stella.addEventListener("click", function () { p.preferito = !p.preferito; MP.store.salva(p); disegna(); });
+        stella.addEventListener("click", function () { p.preferito = !p.preferito; MP.store.salva(p, true); disegna(); });
         top.appendChild(stella);
         s.appendChild(top);
         s.appendChild(MP.el("h3", null, p.titolo));
