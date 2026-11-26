@@ -199,6 +199,9 @@ textarea.corto{min-height:72px}
 textarea.testo-normale{font-family:var(--f-body);font-size:var(--fs-md)}
 ::placeholder{color:var(--ink3);opacity:1}
 .anteprima{white-space:pre-wrap;font-family:var(--f-mono);font-size:var(--fs-sm);line-height:1.6;background:var(--code);border:1px solid var(--line);border-radius:var(--r);padding:16px;max-height:min(60vh,520px);overflow:auto;word-break:break-word}
+.anteprima .val-link{background:var(--acc-soft);color:var(--acc-text);border-radius:var(--r-xs);padding:0 3px;outline:1px dashed var(--acc)}
+.campi .da-link{border-color:var(--acc);background:var(--acc-soft)}
+.avviso-link{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;justify-content:space-between;padding:10px 12px;border-radius:var(--r-s);font-size:var(--fs-md);color:var(--ink);background:var(--acc-soft);border:1px solid var(--acc)}
 .anteprima mark{background:var(--var);color:var(--var-ink);border-radius:var(--r-xs);padding:0 3px}
 .consiglio{background:var(--bg3);border-left:3px solid var(--acc);padding:12px 14px;border-radius:0 var(--r) var(--r) 0;font-size:var(--fs-md);color:var(--ink2)}
 .consiglio strong{color:var(--ink)}
@@ -306,9 +309,10 @@ th{background:var(--bg2);color:var(--ink);font-weight:600}
   .dlg-testa{padding:14px 16px}
   .dlg-testa .muted{display:none}
   .dlg-corpo{padding:14px 16px;gap:14px}
-  .dlg-piede{padding:10px 16px;gap:6px}
-  .dlg-piede .btn.primario{flex:1;min-width:0}
-  .dlg-piede .btn.sec{width:40px;height:40px;padding:0;flex:none}
+  .dlg-piede{padding:10px 16px;gap:5px}
+  .dlg-piede .btn.primario{flex:1;min-width:0;padding:0 10px;white-space:nowrap}
+  .dlg-piede .btn.primario .ico{display:none} /* room for the label next to four icon buttons */
+  .dlg-piede .btn.sec{width:38px;height:40px;padding:0;flex:none}
   .dlg-piede .btn.sec .etich{display:none}
   .dlg-piede .btn{height:40px}
 }
@@ -326,6 +330,7 @@ th{background:var(--bg2);color:var(--ink);font-weight:600}
 .gruppo-testa.inizia h2::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--acc);margin-right:10px;vertical-align:middle}
 /* prompt dialog: empty fields notice (above the buttons) */
 .avviso-campi{flex-basis:100%;display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;justify-content:space-between;padding:10px 12px;border-radius:var(--r-s);font-size:var(--fs-md);color:var(--ink);background:color-mix(in srgb,var(--warn) 12%,var(--bg2));border:1px solid color-mix(in srgb,var(--warn) 45%,var(--line))}
+.pannello-link{flex-basis:100%;display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;justify-content:space-between;padding:10px 12px;border-radius:var(--r-s);font-size:var(--fs-md);color:var(--ink);background:var(--acc-soft);border:1px solid color-mix(in srgb,var(--acc) 55%,var(--line))}
 .azioni-avviso{display:flex;gap:6px;flex-wrap:wrap}
 /* icon-only button (label kept for screen readers and as tooltip) */
 .btn.icona-sola{width:var(--h-sm);padding:0}

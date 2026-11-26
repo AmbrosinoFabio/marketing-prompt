@@ -113,7 +113,8 @@
     esterno: "M14 4h6v6M20 4l-9 9M18 14v6H4V6h6",
     svuota: "M4 12a8 8 0 1 0 2.4-5.7M4 4v4h4",
     matita: "M4 20h4L19 9l-4-4L4 16zM13.5 6.5l4 4",
-    cestino: "M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"
+    cestino: "M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3",
+    link: "M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"
   };
   MP.icona = function (nome) {
     var ns = "http://www.w3.org/2000/svg";
@@ -238,13 +239,14 @@
   };
 
   /** Riempie un elemento con il testo del prompt evidenziando le variabili ancora vuote. */
-  MP.anteprima = function (contenitore, testo, valori) {
+  MP.anteprima = function (contenitore, testo, valori, evidenzia) {
     contenitore.textContent = "";
     var re = /\{([a-z][a-z0-9_]*)\}/g, ultimo = 0, m;
     while ((m = re.exec(testo || ""))) {
       contenitore.appendChild(document.createTextNode(testo.slice(ultimo, m.index)));
       var v = valore(valori, m[1]);
-      if (v.trim()) contenitore.appendChild(document.createTextNode(v.trim()));
+      // values that came from a shared link are highlighted until the user edits them
+      if (v.trim()) contenitore.appendChild(evidenzia && evidenzia[m[1]] ? MP.el("span", "val-link", v.trim()) : document.createTextNode(v.trim()));
       else contenitore.appendChild(MP.el("mark", null, m[0]));
       ultimo = re.lastIndex;
     }

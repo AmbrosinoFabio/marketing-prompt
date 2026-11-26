@@ -188,9 +188,11 @@
       b._salvato = rec;
     }
 
-    function apri(p) {
+    function apri(p, valoriLink) {
       MP.apriPrompt({
         prompt: p,
+        condividi: true,
+        valoriLink: valoriLink,
         azioniExtra: [{
           etichetta: MP.t("lib.saveMine"),
           icona: "piu",
@@ -217,9 +219,9 @@
     }
 
     /** Used by the quick search when already on this page. */
-    MP.apriDallaLibreria = function (id) {
+    MP.apriDallaLibreria = function (id, hash) {
       var trovato = tutti.filter(function (p) { return p.id === id; })[0];
-      if (trovato) apri(trovato);
+      if (trovato) apri(trovato, hash ? MP.valoriDaLink(trovato, hash) : null);
     };
 
     var t;
@@ -227,6 +229,12 @@
     disegna();
 
     var id = params.get("id");
-    if (id) MP.apriDallaLibreria(id);
+    if (id) {
+      // shared link: read the values once, then drop them from the address bar
+      // (they are not kept in the history entry or reused on reload)
+      var hash = /^#v\./.test(location.hash) ? location.hash : "";
+      if (hash) history.replaceState(null, "", location.pathname + location.search);
+      MP.apriDallaLibreria(id, hash);
+    }
   });
 })();

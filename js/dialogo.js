@@ -9,9 +9,68 @@
   // very long URLs can be rejected by servers and browsers.
   var MAX_URL_CLAUDE = 8000;
 
+  // ----- shareable links: prompt.html?id=…#v.field=value -----
+  // The values travel after "#": browsers never send that part to the website.
+  // Whoever crafts a link chooses the values, so they are treated as untrusted text:
+  // only fields the prompt declares, short, single line, no invisible characters,
+  // shown with a notice and never copied or sent anywhere without a click.
+  var SITO = "https://ambrosinofabio.github.io/marketing-prompt/";
+  var MAX_HASH = 2000, MAX_VALORE = 200, MAX_CAMPI = 10;
+
+  /** Fields a link may fill: declared by the library prompt, used in its text,
+      and not the long "paste your text here" ones. */
+  function campiCondivisibili(p) {
+    var usati = MP.variabiliIn(p.testo);
+    return (p.variabili || []).filter(function (v) {
+      return v && usati.indexOf(v.nome) >= 0 && !/\((paste|incolla)/i.test(v.esempio || "");
+    }).map(function (v) { return v.nome; }).slice(0, MAX_CAMPI);
+  }
+  function pulisciValore(s) {
+    return String(s).replace(MP.INVISIBILI, "").replace(/\s+/g, " ").trim().slice(0, MAX_VALORE);
+  }
+
+  /** Reads the field values of a shared link. Returns { valori, n, ignorati }. */
+  MP.valoriDaLink = function (p, hash) {
+    var valori = Object.create(null), n = 0, ignorati = 0;
+    hash = String(hash || "").replace(/^#/, "");
+    if (!hash) return { valori: valori, n: 0, ignorati: 0 };
+    if (hash.length > MAX_HASH) return { valori: valori, n: 0, ignorati: 1 };
+    var ammessi = campiCondivisibili(p);
+    var coppie;
+    try { coppie = new URLSearchParams(hash); } catch (e) { return { valori: valori, n: 0, ignorati: 1 }; }
+    coppie.forEach(function (v, k) {
+      var m = /^v\.([a-z][a-z0-9_]*)$/.exec(k);
+      if (!m) { if (k.indexOf("v.") === 0) ignorati++; return; }
+      if (ammessi.indexOf(m[1]) < 0 || valori[m[1]] !== undefined) { ignorati++; return; }
+      var val = pulisciValore(v);
+      if (!val) return;
+      valori[m[1]] = val; n++;
+    });
+    return { valori: valori, n: n, ignorati: ignorati };
+  };
+
+  /** Builds the link to a library prompt, with the values typed in (if any).
+      Returns { url, n (values included), tagliati (left out: link too long) }. */
+  MP.linkCondivisione = function (p, valori) {
+    var base = location.protocol === "file:" ? SITO : new URL(".", location.href).href;
+    // the language is part of the link: field names can differ between languages
+    var url = base + "prompt.html?id=" + encodeURIComponent(p.id) + (MP.lingua !== "en" ? "&lang=" + MP.lingua : "");
+    var parti = [], lunghezza = 0, tagliati = 0;
+    campiCondivisibili(p).forEach(function (nome) {
+      var v = valori && Object.prototype.hasOwnProperty.call(valori, nome) ? pulisciValore(valori[nome] || "") : "";
+      if (!v) return;
+      var parte = "v." + nome + "=" + encodeURIComponent(v);
+      if (lunghezza + parte.length + 1 > MAX_HASH) { tagliati++; return; }
+      parti.push(parte); lunghezza += parte.length + 1;
+    });
+    return { url: url + (parti.length ? "#" + parti.join("&") : ""), n: parti.length, tagliati: tagliati };
+  };
+
   /**
    * opzioni.prompt       { titolo, categoria, descrizione, testo, variabili?, consiglio?, tecniche?, fonte?, licenza?, revisione?, note? }
    * opzioni.azioniExtra  [{ etichetta, icona?, primario?, azione(testoCompilato, dialog, bottone), prepara?(bottone) }]
+   * opzioni.condividi    true: "Share link" button (library prompts only)
+   * opzioni.valoriLink   result of MP.valoriDaLink: values to put in the fields, with a notice
    */
   MP.apriPrompt = function (opzioni) {
     var p = opzioni.prompt;
@@ -52,6 +111,11 @@
     }
     if (p.note) sx.appendChild(el("div", "consiglio", p.note));
 
+    // values from a shared link: say so first, before the user copies anything
+    var daLink = Object.create(null); // field name → true while it still holds the link's value
+    var link = opzioni.valoriLink;
+    var avvisoLink = null;
+
     // variables: declared (library) or detected in the text (my prompts)
     // maps without a prototype: a field called {constructor} must not find Object's own
     var dichiarate = Object.create(null);
@@ -75,7 +139,16 @@
         // "e.g." prefix: without it the grey example looked like a value already typed in
         // ("paste your text here" is an instruction, not an example: no prefix)
         inp.placeholder = !info.esempio ? "" : lungo ? info.esempio : MP.t("lib.eg", info.esempio);
-        inp.addEventListener("input", function () { valori[n] = inp.value; aggiorna(); });
+        inp.addEventListener("input", function () {
+          valori[n] = inp.value;
+          if (daLink[n]) { delete daLink[n]; inp.classList.remove("da-link"); } // now it is the user's own text
+          aggiorna();
+        });
+        if (link && link.valori[n] !== undefined) {
+          inp.value = valori[n] = link.valori[n];
+          daLink[n] = true;
+          inp.classList.add("da-link");
+        }
         lab.appendChild(inp);
         campi.appendChild(lab);
         input.push(inp);
@@ -84,6 +157,27 @@
       });
       sx.appendChild(campi);
       sx.appendChild(el("p", "fonte-riga", MP.t("lib.fieldsNote")));
+    }
+
+    if (link && (link.n || link.ignorati)) {
+      avvisoLink = el("div", "avviso-link");
+      avvisoLink.setAttribute("role", "status");
+      var testoAvviso = link.n === 1 ? MP.t("lib.linkFilled1") : link.n ? MP.t("lib.linkFilledN", link.n) : "";
+      if (link.ignorati) testoAvviso += (testoAvviso ? " " : "") + MP.t("lib.linkIgnored");
+      avvisoLink.appendChild(el("span", null, testoAvviso));
+      if (link.n) {
+        var bSvuota = MP.bottone("btn piccolo", "svuota", MP.t("lib.linkClear"));
+        bSvuota.addEventListener("click", function () {
+          Object.keys(daLink).forEach(function (n) { campoPer[n].value = ""; delete valori[n]; campoPer[n].classList.remove("da-link"); });
+          daLink = Object.create(null);
+          avvisoLink.remove();
+          aggiorna();
+          MP.toast(MP.t("lib.linkCleared"));
+          if (input[0]) input[0].focus();
+        });
+        avvisoLink.appendChild(bSvuota);
+      }
+      sx.insertBefore(avvisoLink, sx.firstChild);
     }
 
     if (p.tecniche && p.tecniche.length) {
@@ -137,7 +231,7 @@
       viste.setAttribute("role", "group");
       viste.setAttribute("aria-label", MP.t("lib.view"));
       colonne.setAttribute("data-vista", "sx");
-      [["sx", nomi.length ? MP.t("lib.fields") : MP.t("lib.details")], ["dx", MP.t("lib.preview")]].forEach(function (v) {
+      [["sx", nomi.length ? MP.t("lib.fields") : MP.t("lib.details")], ["dx", MP.t("lib.previewTab")]].forEach(function (v) {
         var t = el("button", "tab", v[1]);
         t.type = "button";
         t.setAttribute("aria-pressed", v[0] === "sx" ? "true" : "false");
@@ -166,6 +260,7 @@
       return nomi.filter(function (n) { return !(valori[n] || "").trim(); });
     }
     function controllaCampi(azione, chiaveComunque) {
+      if (pannelloLink) pannelloLink.hidden = true;
       var v = vuoti();
       if (!v.length) { avvisoCampi.hidden = true; azione(); return; }
       avvisoCampi.textContent = "";
@@ -213,6 +308,42 @@
     };
     bClaude.addEventListener("click", function () { controllaCampi(apriClaude, "lib.openAnyway"); });
     piede.appendChild(bClaude);
+
+    // Share link: without values it is copied at once; with values, first say that
+    // whoever gets the link will read them, and offer a link without values
+    var pannelloLink = null;
+    if (opzioni.condividi) {
+      pannelloLink = el("div", "pannello-link");
+      pannelloLink.hidden = true;
+      piede.insertBefore(pannelloLink, avvisoCampi.nextSibling);
+      var bLink = MP.bottone("btn sec");
+      MP.etichettaBottone(bLink, "link", MP.t("lib.share"));
+      bLink.title = MP.t("lib.shareTip");
+      var copiaLink = function (conValori) {
+        var l = MP.linkCondivisione(p, conValori ? valori : null);
+        var msg = conValori === null ? MP.t("lib.linkCopiedEmpty") : MP.t("lib.linkCopied");
+        if (l.tagliati) msg += " " + MP.t("lib.linkCut");
+        MP.copia(l.url, null, msg);
+        pannelloLink.hidden = true;
+      };
+      bLink.addEventListener("click", function () {
+        avvisoCampi.hidden = true;
+        var prova = MP.linkCondivisione(p, valori);
+        if (!prova.n) { copiaLink(null); return; }
+        pannelloLink.textContent = "";
+        pannelloLink.appendChild(el("span", null, prova.n === 1 ? MP.t("lib.shareWarn1") : MP.t("lib.shareWarnN", prova.n)));
+        var az = el("span", "azioni-avviso");
+        var bCon = MP.bottone("btn piccolo", null, MP.t("lib.shareWith"));
+        bCon.addEventListener("click", function () { copiaLink(true); });
+        var bSenza = MP.bottone("btn piccolo", null, MP.t("lib.shareWithout"));
+        bSenza.addEventListener("click", function () { copiaLink(false); });
+        az.appendChild(bCon); az.appendChild(bSenza);
+        pannelloLink.appendChild(az);
+        pannelloLink.hidden = false;
+        bCon.focus();
+      });
+      piede.appendChild(bLink);
+    }
     (opzioni.azioniExtra || []).forEach(function (a) {
       var b = MP.bottone("btn" + (a.primario ? " primario" : " sec"));
       MP.etichettaBottone(b, a.icona, a.etichetta);
@@ -226,6 +357,9 @@
       bReset.addEventListener("click", function () {
         input.forEach(function (i) { i.value = ""; });
         valori = Object.create(null);
+        Object.keys(daLink).forEach(function (n) { campoPer[n].classList.remove("da-link"); });
+        daLink = Object.create(null);
+        if (avvisoLink) avvisoLink.remove();
         avvisoCampi.hidden = true;
         aggiorna();
         if (input[0]) input[0].focus();
@@ -241,7 +375,7 @@
     dlg.appendChild(piede);
 
     function aggiorna() {
-      MP.anteprima(prev, p.testo, valori);
+      MP.anteprima(prev, p.testo, valori, daLink);
       if (!avvisoCampi.hidden && !vuoti().length) avvisoCampi.hidden = true; // all filled in now
     }
     aggiorna();
