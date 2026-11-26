@@ -182,11 +182,15 @@
     fileImporta.addEventListener("change", function () {
       var f = fileImporta.files && fileImporta.files[0];
       if (!f) return;
+      if (f.size > 5e6) { MP.toast(MP.t("mine.importErr", MP.t("mine.importBig"))); fileImporta.value = ""; return; }
       var r = new FileReader();
       r.onload = function () {
         try {
           var esito = MP.store.importa(String(r.result));
-          MP.toast(MP.t("mine.imported", esito.nuovi, esito.aggiornati));
+          var msg = MP.t("mine.imported", esito.nuovi, esito.aggiornati);
+          if (esito.troppi) msg += " " + MP.t("mine.importMany");
+          if (esito.invisibili) msg += " " + MP.t("mine.importInvisible", esito.invisibili);
+          MP.toast(msg);
           disegna();
         } catch (err) {
           MP.toast(MP.t("mine.importErr", err.message));

@@ -53,13 +53,14 @@
     if (p.note) sx.appendChild(el("div", "consiglio", p.note));
 
     // variables: declared (library) or detected in the text (my prompts)
-    var dichiarate = {};
+    // maps without a prototype: a field called {constructor} must not find Object's own
+    var dichiarate = Object.create(null);
     (p.variabili || []).forEach(function (v) { dichiarate[v.nome] = v; });
     var nomi = MP.variabiliIn(p.testo);
-    var valori = {};
+    var valori = Object.create(null);
     var input = [];
-    var campoPer = {}; // field name → its input
-    var esempioPer = {}; // field name → example usable as a value ("(paste …)" hints are not)
+    var campoPer = Object.create(null); // field name → its input
+    var esempioPer = Object.create(null); // field name → example usable as a value ("(paste …)" hints are not)
 
     if (nomi.length) {
       sx.appendChild(el("h3", null, MP.t("lib.fields")));
@@ -224,7 +225,7 @@
       MP.etichettaBottone(bReset, "svuota", MP.t("lib.reset"));
       bReset.addEventListener("click", function () {
         input.forEach(function (i) { i.value = ""; });
-        valori = {};
+        valori = Object.create(null);
         avvisoCampi.hidden = true;
         aggiorna();
         if (input[0]) input[0].focus();

@@ -6,7 +6,7 @@
   if (!("serviceWorker" in navigator) || !/^https?:$/.test(location.protocol)) return;
 
   window.addEventListener("load", function () {
-    navigator.serviceWorker.register("sw.js").catch(function () { /* the site works without it */ });
+    navigator.serviceWorker.register(MP.urlScriptFidato("sw.js")).catch(function () { /* the site works without it */ });
   });
 
   // ----- "A new version is available – Reload" -----

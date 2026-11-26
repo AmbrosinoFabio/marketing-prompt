@@ -6,6 +6,22 @@
   var MP = window.MP = window.MP || {};
   if (!MP.t) MP.t = function (k) { return k; };
 
+  // never shown inside another site's frame (clickjacking): GitHub Pages cannot send
+  // X-Frame-Options and a CSP meta tag cannot use frame-ancestors
+  if (window.top !== window.self) document.documentElement.hidden = true;
+
+  // Trusted Types (CSP "require-trusted-types-for 'script'"): the browser refuses any
+  // HTML or script address built from text unless it passes this policy, which allows
+  // only the two fixed values the site uses. Browsers without Trusted Types get the text.
+  var CONSENTITI_HTML = ['<script src="data/prompts-it.js"><\/script>'];
+  var CONSENTITI_URL = ["sw.js"];
+  var politica = window.trustedTypes && window.trustedTypes.createPolicy ? window.trustedTypes.createPolicy("mp", {
+    createHTML: function (s) { if (CONSENTITI_HTML.indexOf(s) < 0) throw new TypeError("blocked HTML"); return s; },
+    createScriptURL: function (s) { if (CONSENTITI_URL.indexOf(s) < 0) throw new TypeError("blocked script URL"); return s; }
+  }) : null;
+  MP.htmlFidato = function (s) { return politica ? politica.createHTML(s) : s; };
+  MP.urlScriptFidato = function (s) { return politica ? politica.createScriptURL(s) : s; };
+
   // ---------- tema chiaro/scuro ----------
   var CHIAVE_TEMA = "mp_tema";
   function leggi(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
@@ -63,6 +79,10 @@
     if (anno) anno.textContent = String(new Date().getFullYear());
   });
 
+
+  /** Invisible characters that can hide text (zero-width, direction marks, Unicode "tag"
+      letters, variation selectors…). The zero-width joiner U+200D stays: emojis use it. */
+  MP.INVISIBILI = /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F-\u009F­؜᠎​‌‎‏‪-‮⁠-⁯︀-️﻿]|\uDB40[\uDC00-\uDDEF]/g;
 
   /** Lowercase text without accents, for searches ("Caffè" -> "caffe"). */
   MP.normalizza = function (s) {
@@ -197,16 +217,23 @@
 
   /** Trova le variabili {nome} in un testo, senza doppioni, nell'ordine in cui compaiono. */
   MP.variabiliIn = function (testo) {
-    var visti = {}, out = [], re = /\{([a-z][a-z0-9_]*)\}/g, m;
+    // no prototype: a field called {constructor} is a normal name here
+    var visti = Object.create(null), out = [], re = /\{([a-z][a-z0-9_]*)\}/g, m;
     while ((m = re.exec(testo || ""))) { if (!visti[m[1]]) { visti[m[1]] = 1; out.push(m[1]); } }
     return out;
   };
 
+  /** The value typed for a field: always a string ("" if missing; never Object's own keys). */
+  function valore(valori, nome) {
+    var v = valori && Object.prototype.hasOwnProperty.call(valori, nome) ? valori[nome] : "";
+    return typeof v === "string" ? v : "";
+  }
+
   /** Sostituisce {nome} con i valori; le variabili vuote restano come {nome}. */
   MP.compila = function (testo, valori) {
     return (testo || "").replace(/\{([a-z][a-z0-9_]*)\}/g, function (tutto, nome) {
-      var v = valori && valori[nome];
-      return v && v.trim() ? v.trim() : tutto;
+      var v = valore(valori, nome);
+      return v.trim() ? v.trim() : tutto;
     });
   };
 
@@ -216,8 +243,8 @@
     var re = /\{([a-z][a-z0-9_]*)\}/g, ultimo = 0, m;
     while ((m = re.exec(testo || ""))) {
       contenitore.appendChild(document.createTextNode(testo.slice(ultimo, m.index)));
-      var v = valori && valori[m[1]];
-      if (v && v.trim()) contenitore.appendChild(document.createTextNode(v.trim()));
+      var v = valore(valori, m[1]);
+      if (v.trim()) contenitore.appendChild(document.createTextNode(v.trim()));
       else contenitore.appendChild(MP.el("mark", null, m[0]));
       ultimo = re.lastIndex;
     }

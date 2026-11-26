@@ -42,7 +42,8 @@ self.addEventListener("install", function (e) {
 
 self.addEventListener("activate", function (e) {
   e.waitUntil(caches.keys().then(function (nomi) {
-    return Promise.all(nomi.filter(function (n) { return n !== VERSIONE; }).map(function (n) { return caches.delete(n); }));
+    // only this site's old caches: other sites on the same domain keep theirs
+    return Promise.all(nomi.filter(function (n) { return n.indexOf("mp-") === 0 && n !== VERSIONE; }).map(function (n) { return caches.delete(n); }));
   }).then(function () { return self.clients.claim(); }));
 });
 

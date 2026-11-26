@@ -7,5 +7,5 @@
   "use strict";
   var FILE = { it: "data/prompts-it.js" };
   var f = window.MP && FILE[window.MP.lingua];
-  if (f) document.write('<script src="' + f + '"><\/script>');
+  if (f) document.write(window.MP.htmlFidato('<script src="' + f + '"><\/script>'));
 })();

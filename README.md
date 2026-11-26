@@ -78,7 +78,7 @@ tools/valida_prompt.py   checks the prompt library
 .github/workflows/valida.yml checks the prompts on every push / pull request that changes them
 ```
 
-**Security:** every page has a Content-Security-Policy meta tag (scripts and styles only from the site itself, no inline code): keep new code in `js/` files and use no `onclick=` or `style=` attributes.
+**Security:** every page has a Content-Security-Policy meta tag (scripts and styles only from the site itself, no inline code): keep new code in `js/` files and use no `onclick=` or `style=` attributes. Trusted Types are enforced too: HTML or script addresses built from text are refused unless `MP.htmlFidato` / `MP.urlScriptFidato` (js/comune.js) allow them. See also [SECURITY.md](SECURITY.md).
 
 **Adding a prompt:** add it to `data/prompts.js` and its translation to `data/prompts-it.js`
 (same `id`), then run `python tools/valida_prompt.py`.

@@ -31,6 +31,8 @@
     }
   }
 
+  var MAX_IMPORT = 2000; // prompts read from one backup file
+
   function nuovoId() {
     return "mio-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 7);
   }
@@ -112,17 +114,28 @@
       if (dati.schemaVersion && dati.schemaVersion > VERSIONE_SCHEMA) {
         throw new Error(MP.lingua === "it" ? "il backup viene da una versione più recente dell'app" : "the backup comes from a newer version of the app");
       }
-      var lista = leggiTutti(), nuovi = 0, aggiornati = 0;
-      arrivati.forEach(function (grezzo) {
+      var lista = leggiTutti(), nuovi = 0, aggiornati = 0, invisibili = 0;
+      var pos = new Map(); // id -> position: fast merge also for big backups
+      lista.forEach(function (x, i) { pos.set(x.id, i); });
+      // removes characters you cannot see (they could hide instructions in a shared file)
+      var visibile = function (t) {
+        return t.replace(MP.INVISIBILI, function () { invisibili++; return ""; });
+      };
+      arrivati.slice(0, MAX_IMPORT).forEach(function (grezzo) {
         if (!grezzo || typeof grezzo !== "object") return;
         var p = pulisci(grezzo);
-        var i = lista.findIndex(function (x) { return x.id === p.id; });
-        if (i < 0) { lista.push(p); nuovi++; }
+        p.titolo = visibile(p.titolo); p.testo = visibile(p.testo); p.note = visibile(p.note);
+        p.variabili.forEach(function (v) { v.etichetta = visibile(v.etichetta); v.esempio = visibile(v.esempio); });
+        // the link to a library prompt is set only by this site, never by a file
+        // (a crafted file could take over the library's "Saved - Open" button)
+        var i = pos.get(p.id);
+        p.origine = i === undefined ? "" : lista[i].origine;
+        if (i === undefined) { pos.set(p.id, lista.length); lista.push(p); nuovi++; }
         else if (p.modificato > lista[i].modificato) { lista[i] = p; aggiornati++; }
       });
       // e.g. browser storage full: say so instead of reporting a success
       if ((nuovi || aggiornati) && !scriviTutti(lista)) throw new Error(MP.t("ui.saveFail"));
-      return { nuovi: nuovi, aggiornati: aggiornati };
+      return { nuovi: nuovi, aggiornati: aggiornati, invisibili: invisibili, troppi: arrivati.length > MAX_IMPORT };
     }
   };
 })();
