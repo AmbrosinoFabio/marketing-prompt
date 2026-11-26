@@ -23,6 +23,7 @@ import json
 import os
 import re
 import sys
+import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
@@ -138,7 +139,7 @@ def leggi_feed(fonte: dict) -> list[dict]:
         link = link_sicuro(link)
         if not titolo or not link:
             continue
-        if "github.com" in fonte["url"]:
+        if urllib.parse.urlsplit(fonte["url"]).hostname == "github.com":
             # commit messages: keep only the first line, no excerpt
             titolo = titolo.splitlines()[0]
             estratto = ""
