@@ -93,10 +93,13 @@ def data_iso(s: str | None) -> str:
     return d.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
+MAX_BYTE = 5_000_000  # 5 MB: far more than any feed or watched page
+
+
 def scarica(url: str) -> bytes:
     req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT, "Accept": "*/*"})
     with urllib.request.urlopen(req, timeout=TIMEOUT) as r:
-        return r.read()
+        return r.read(MAX_BYTE)  # a huge answer cannot exhaust the runner's memory
 
 
 def link_sicuro(url: str | None) -> str:

@@ -8,3 +8,9 @@ Thumbs.db
 bozze/
 revisione.html
 js/revisione.js
+
+# Secrets and local environments
+.env
+*.pem
+*.key
+.venv/

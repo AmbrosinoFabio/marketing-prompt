@@ -1,0 +1,11 @@
+# Dependabot: once a week checks the GitHub Actions used by the workflows and opens a
+# pull request when a new version is out (the actions are pinned to commit ids).
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    groups:
+      actions:
+        patterns: ["*"]

@@ -7,9 +7,8 @@ on:
     - cron: "0 6 * * *"   # every day at 06:00 UTC
   workflow_dispatch:
 
-permissions:
-  contents: write   # commit data/news.js
-  issues: write     # open a reminder when a watched page changes
+# Actions are pinned to a full commit id (not a movable tag); Dependabot proposes updates.
+permissions: {}     # nothing by default; the job below gets only what it needs
 
 concurrency:
   group: news
@@ -18,10 +17,18 @@ concurrency:
 jobs:
   news:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write   # commit data/news.js
+      issues: write     # open a reminder when a watched page changes
     steps:
-      - uses: actions/checkout@v7
+      # the write token is not left in .git/config while third-party feeds are read;
+      # it is passed only to the final push
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
 
-      - uses: actions/setup-python@v7
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
         with:
           python-version: "3.12"
 
@@ -33,6 +40,8 @@ jobs:
         run: python tools/aggiorna_news.py
 
       - name: Commit if something changed
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -41,7 +50,7 @@ jobs:
             echo "Nothing to commit."
           else
             git commit -m "Update news ($(date -u +%Y-%m-%d))"
-            git push
+            git push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:main
           fi
 
       - name: Open a reminder issue when an official guide changed
